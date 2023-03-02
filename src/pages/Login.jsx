@@ -5,10 +5,10 @@ export default function Login() {
   const [disabled, setDisabled] = useState(true);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const history = useHistory();
-  function handleCheckEmail({ target: { name, value } }) {
+  const handleCheckEmail = ({ target: { name, value } }) => {
     setLoginData({ ...loginData, [name]: value });
 
-    // avalia se o a senha e o email estão corretos
+    // Avalia se o a senha e o email estão corretos
     const re = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     const minChar = 6;
     if (loginData.email.length >= minChar
@@ -17,12 +17,13 @@ export default function Login() {
       return;
     }
     setDisabled(true);
-  }
+  };
 
-  function handleSubmitLogin() {
+  // Aqui para setar LocalStorage
+  const handleSubmitLogin = () => {
     localStorage.setItem('user', JSON.stringify({ email: loginData.email }));
     history.push('/');
-  }
+  };
 
   return (
     <div>
