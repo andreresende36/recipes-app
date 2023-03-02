@@ -27,6 +27,7 @@ export default function Login() {
 
   return (
     <div>
+      <h3>email</h3>
       <input
         type="text"
         name="email"
@@ -34,6 +35,8 @@ export default function Login() {
         data-testid="email-input"
         onChange={ handleCheckEmail }
       />
+      <br />
+      <h3>password</h3>
       <input
         type="text"
         name="password"
