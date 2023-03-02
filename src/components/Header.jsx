@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 import profileIconImg from '../images/profileIcon.svg';
 import searchIconImg from '../images/searchIcon.svg';
@@ -18,11 +17,9 @@ export default function Header(props) {
     <div>
       <h1 data-testid="page-title">{ title }</h1>
       { profileIcon && (
-        <Link to="/profile">
-          <button type="button">
-            <img data-testid="profile-top-btn" src={ profileIconImg } alt="" />
-          </button>
-        </Link>
+        <button type="button">
+          <img data-testid="profile-top-btn" src={ profileIconImg } alt="" />
+        </button>
       ) }
       { searchingBarVisible && (
         <input
