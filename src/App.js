@@ -16,13 +16,15 @@ function App() {
         <Route path="/drinks/:id/in-progress" />
         <Route path="/meals/:id" />
         <Route path="/drinks/:id" />
-        <Route path="/meals" />
-        render=
-        { (props) => <Meals { ...props } /> }
+        <Route
+          path="/meals"
+          render={ (props) => <Meals { ...props } /> }
+        />
+
         <Route
           path="/drinks"
           component={ Drinks }
-          render={ (props) => <Drinks { ...props } /> }
+          render={ (props) => <Meals { ...props } /> }
         />
         <Route
           path="/profile"
