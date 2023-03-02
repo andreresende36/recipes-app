@@ -1,10 +1,14 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function Drinks() {
+function Drinks(props) {
+  console.log(props);
   return (
     <div>
-      <Header headerType={ { title: 'Drinks', profileIcon: true, searchIcon: true } } />
+      <Header
+        headerType={ { title: 'Drinks', profileIcon: true, searchIcon: true } }
+        { ...props }
+      />
     </div>
   );
 }

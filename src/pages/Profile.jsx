@@ -1,10 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function Profile() {
+function Profile(props) {
   return (
     <div>
-      <Header headerType={ { title: 'Profile', profileIcon: true, searcIcon: false } } />
+      <Header
+        headerType={ { title: 'Profile', profileIcon: true, searcIcon: false } }
+        { ...props }
+      />
     </div>
   );
 }

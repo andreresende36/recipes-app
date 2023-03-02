@@ -4,18 +4,20 @@ import userEvent from '@testing-library/user-event';
 import HeaderProvider from '../context/HeaderProvider';
 import Header from '../components/Header';
 import '@testing-library/jest-dom';
+import Drinks from '../pages/Drinks';
 
 const searchBtnTestId = 'search-top-btn';
+const profileBtnTestId = 'profile-top-btn';
 
 describe('Testa o componente Header', () => {
   it('testa se mostra o titulo e o icone de profile e o icone de search', () => {
     render(
       <HeaderProvider>
-        <Header headerType={ { title: 'Drinks', profileIcon: true, searchIcon: true } } />
+        <Drinks />
       </HeaderProvider>,
     );
     expect(screen.getByText('Drinks')).toBeInTheDocument();
-    expect(screen.getByTestId('profile-top-btn')).toBeInTheDocument();
+    expect(screen.getByTestId(profileBtnTestId)).toBeInTheDocument();
     expect(screen.getByTestId(searchBtnTestId)).toBeInTheDocument();
   });
 
@@ -27,14 +29,14 @@ describe('Testa o componente Header', () => {
     );
 
     expect(screen.getByText('Drinks')).toBeInTheDocument();
-    expect(screen.queryByTestId('profile-top-btn')).not.toBeInTheDocument();
+    expect(screen.queryByTestId(profileBtnTestId)).not.toBeInTheDocument();
     expect(screen.queryByTestId(searchBtnTestId)).not.toBeInTheDocument();
   });
 
   it('testa se ao clickar no botão de procurar o input da barra de busca aparece', () => {
     render(
       <HeaderProvider>
-        <Header headerType={ { title: 'Drinks', profileIcon: true, searchIcon: true } } />
+        <Drinks />
       </HeaderProvider>,
     );
     const searchBtn = screen.getByTestId(searchBtnTestId);
@@ -45,7 +47,7 @@ describe('Testa o componente Header', () => {
   it('testa se é possível digitar no search input', () => {
     render(
       <HeaderProvider>
-        <Header headerType={ { title: 'Drinks', profileIcon: true, searchIcon: true } } />
+        <Drinks />
       </HeaderProvider>,
     );
     const searchBtn = screen.getByTestId(searchBtnTestId);
@@ -53,5 +55,16 @@ describe('Testa o componente Header', () => {
     const searchInput = screen.getByTestId('search-input');
     userEvent.type(searchInput, 'bla');
     expect(searchInput).toHaveValue('bla');
+  });
+
+  it('testa se ao clickar no profile é redirecionado pro profile', () => {
+    render(
+      <HeaderProvider>
+        <Drinks />
+      </HeaderProvider>,
+    );
+    const profileBtn = screen.getByTestId(profileBtnTestId);
+    userEvent.click(profileBtn);
+    expect(screen.getByText('Profile')).toBeInTheDocument();
   });
 });

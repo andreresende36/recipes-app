@@ -16,11 +16,26 @@ function App() {
         <Route path="/drinks/:id/in-progress" />
         <Route path="/meals/:id" />
         <Route path="/drinks/:id" />
-        <Route path="/meals" component={ Meals } />
-        <Route path="/drinks" component={ Drinks } />
-        <Route path="/profile" component={ Profile } />
-        <Route path="/done-recipes" component={ DoneRecipes } />
-        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route path="/meals" />
+        render=
+        { (props) => <Meals { ...props } /> }
+        <Route
+          path="/drinks"
+          component={ Drinks }
+          render={ (props) => <Drinks { ...props } /> }
+        />
+        <Route
+          path="/profile"
+          render={ (props) => <Profile { ...props } /> }
+        />
+        <Route
+          path="/done-recipes"
+          render={ (props) => <DoneRecipes { ...props } /> }
+        />
+        <Route
+          path="/favorite-recipes"
+          render={ (props) => <FavoriteRecipes { ...props } /> }
+        />
         <Route exact path="/" />
       </Switch>
     </Switch>

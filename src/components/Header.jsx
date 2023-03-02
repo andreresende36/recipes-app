@@ -12,12 +12,13 @@ export default function Header(props) {
   const { headerType: { title, profileIcon, searchIcon } } = props;
 
   const { search, setSearch } = useContext(HeaderContext);
+  const { history } = props;
 
   return (
     <div>
       <h1 data-testid="page-title">{ title }</h1>
       { profileIcon && (
-        <button type="button">
+        <button type="button" onClick={ () => history.push('/profile') }>
           <img data-testid="profile-top-btn" src={ profileIconImg } alt="" />
         </button>
       ) }
@@ -49,5 +50,8 @@ Header.propTypes = {
     title: PropTypes.string,
     profileIcon: PropTypes.bool,
     searchIcon: PropTypes.bool,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 };
