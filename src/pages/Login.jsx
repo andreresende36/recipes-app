@@ -22,7 +22,7 @@ export default function Login() {
   // Aqui para setar LocalStorage
   const handleSubmitLogin = () => {
     localStorage.setItem('user', JSON.stringify({ email: loginData.email }));
-    history.push('/');
+    history.push('/meals');
   };
 
   return (

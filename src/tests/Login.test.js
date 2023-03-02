@@ -19,10 +19,16 @@ describe('teste do página de login', () => {
     const emailInput = await screen.findByTestId('email-input');
     const passwordInput = await screen.findByTestId('password-input');
     const buttonInput = await screen.findByTestId('login-submit-btn');
+
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
     expect(buttonInput).toBeInTheDocument();
+
     userEvent.type(emailInput, 'email@email.com');
+    userEvent.type(passwordInput, '2356');
+    expect(buttonInput).toBeDisabled();
+
     userEvent.type(passwordInput, '123567');
+    userEvent.click(buttonInput);
   });
 });
