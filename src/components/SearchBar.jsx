@@ -31,7 +31,7 @@ function SearchBar(props) {
       setApiURL(`https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`);
       break;
     default:
-      if ('barra de busca'.length > 0) {
+      if (search.length > 0) {
         global.alert('Your search must have only 1 (one) character');
       }
       // se for cocktail muda o link
@@ -47,7 +47,7 @@ function SearchBar(props) {
   useEffect(() => {
     // se tiver na pagina de bebidas seta como bebidas a variavel que armazena isso
     const { title } = props;
-    if (title === 'drinks') {
+    if (title === 'Drinks') {
       setMealOrCockTail('cocktail');
     }
   }, [props]);
