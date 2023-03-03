@@ -3,14 +3,20 @@ import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header';
 import Recipes from '../components/Recipes';
 import Footer from '../components/Footer';
+import CategoryButton from '../components/CategoryButton';
 
 function Drinks() {
-  const { drinks } = useContext(RecipesContext);
-  const numberOfDrinksToShow = 12;
+  const { drinks, drinksCategories } = useContext(RecipesContext);
+  const numberOfCategoriesToShow = 5;
   return (
-    <div>
+    <div className="drinks-page">
+      <div className="categories-buttons-container">
+        {drinksCategories.slice(0, numberOfCategoriesToShow).map(({ strCategory }) => (
+          <CategoryButton key={ strCategory } strCategory={ strCategory } />
+        ))}
+      </div>
       <Header />
-      <Recipes recipes={ drinks.slice(0, numberOfDrinksToShow) } />
+      <Recipes recipes={ drinks } />
       <Footer />
     </div>
   );
