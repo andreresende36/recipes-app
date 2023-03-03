@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Provider from './context/Provider';
 import Meals from './pages/Meals';
 import Drinks from './pages/Drinks';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route path="/profile" />
         <Route path="/done-recipes" />
         <Route path="/favorite-recipes" />
-        <Route exact path="/" />
+        <Route exact path="/" component={ Login } />
       </Switch>
     </Provider>
   );
