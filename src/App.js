@@ -4,13 +4,15 @@ import { Switch, Route } from 'react-router-dom';
 import Profile from './pages/Profile';
 import Drinks from './pages/Drinks';
 import Meals from './pages/Meals';
+import Login from './pages/Login';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import Provider from './context/RecipesProvider';
 // import Header from './components/Header';
 
 function App() {
   return (
-    <Switch>
+    <Provider>
       <Switch>
         <Route path="/meals/:id/in-progress" />
         <Route path="/drinks/:id/in-progress" />
@@ -38,9 +40,9 @@ function App() {
           path="/favorite-recipes"
           render={ (props) => <FavoriteRecipes { ...props } /> }
         />
-        <Route exact path="/" />
+        <Route exact path="/" component={ Login } />
       </Switch>
-    </Switch>
+    </Provider>
   );
 }
 
