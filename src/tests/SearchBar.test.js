@@ -11,6 +11,8 @@ import renderWithRouter from './helpers/renderWithRouter';
 const searchIconBtnTestId = 'search-top-btn';
 const searchInputTestId = 'search-input';
 const searchSubmitBtnTestId = 'exec-search-btn';
+const nameRadioTestId = 'name-search-radio';
+const firstLetterTestId = 'first-letter-search-radio';
 
 describe('Testa o componente search bar', () => {
   test('deveria renderizar apenas os meals certos quando digito big com o input selecionado name', async () => {
@@ -26,7 +28,7 @@ describe('Testa o componente search bar', () => {
     });
     const searchIconBtn = screen.getByTestId(searchIconBtnTestId);
     userEvent.click(searchIconBtn);
-    const nameRadio = screen.getByTestId('name-search-radio');
+    const nameRadio = screen.getByTestId(nameRadioTestId);
     userEvent.click(nameRadio);
     const searchInput = screen.getByTestId(searchInputTestId);
     userEvent.type(searchInput, 'big');
@@ -80,7 +82,7 @@ describe('Testa o componente search bar', () => {
     });
     const searchIconBtn = screen.getByTestId(searchIconBtnTestId);
     userEvent.click(searchIconBtn);
-    const firstLetterRadio = screen.getByTestId('first-letter-search-radio');
+    const firstLetterRadio = screen.getByTestId(firstLetterTestId);
     userEvent.click(firstLetterRadio);
     const searchInput = screen.getByTestId(searchInputTestId);
     userEvent.type(searchInput, 'p');
@@ -135,7 +137,7 @@ describe('Testa o componente search bar', () => {
     });
     const searchIconBtn = screen.getByTestId(searchIconBtnTestId);
     userEvent.click(searchIconBtn);
-    const firstLetterRadio = screen.getByTestId('name-search-radio');
+    const firstLetterRadio = screen.getByTestId(nameRadioTestId);
     userEvent.click(firstLetterRadio);
     const searchInput = screen.getByTestId(searchInputTestId);
     userEvent.type(searchInput, 'aquamarine');
@@ -160,7 +162,7 @@ describe('Testa o componente search bar', () => {
     });
     const searchIconBtn = screen.getByTestId(searchIconBtnTestId);
     userEvent.click(searchIconBtn);
-    const firstLetterRadio = screen.getByTestId('name-search-radio');
+    const firstLetterRadio = screen.getByTestId(nameRadioTestId);
     userEvent.click(firstLetterRadio);
     const searchInput = screen.getByTestId(searchInputTestId);
     userEvent.type(searchInput, 'corba');
@@ -184,7 +186,7 @@ describe('Testa o componente search bar', () => {
     });
     const searchIconBtn = screen.getByTestId(searchIconBtnTestId);
     userEvent.click(searchIconBtn);
-    const firstLetterRadio = screen.getByTestId('first-letter-search-radio');
+    const firstLetterRadio = screen.getByTestId(firstLetterTestId);
     userEvent.click(firstLetterRadio);
     const searchInput = screen.getByTestId(searchInputTestId);
     userEvent.type(searchInput, 'p');
@@ -211,7 +213,7 @@ describe('Testa o componente search bar', () => {
     });
     const searchIconBtn = screen.getByTestId(searchIconBtnTestId);
     userEvent.click(searchIconBtn);
-    const firstLetterRadio = screen.getByTestId('first-letter-search-radio');
+    const firstLetterRadio = screen.getByTestId(firstLetterTestId);
     userEvent.click(firstLetterRadio);
     const searchInput = screen.getByTestId(searchInputTestId);
     userEvent.type(searchInput, 'pe');
