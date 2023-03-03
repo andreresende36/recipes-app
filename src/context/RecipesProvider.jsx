@@ -7,8 +7,8 @@ import {
   getMealsCategories,
   getDrinksCategories } from '../services/apiServices';
 
-function Provider({ children }) {
-  const [search, setSearch] = useState('');
+function RecipesProvider({ children }) {
+  const [apiURL, setApiURL] = useState('');
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [mealsCategories, setMealsCategories] = useState([]);
@@ -16,28 +16,28 @@ function Provider({ children }) {
 
   // Deixei essa função aqui para ser implementada ainda. André Resende
   const handleSearch = (newSearch) => {
-    setSearch(newSearch);
+    setApiURL(newSearch);
   };
 
   const data = useMemo(
-    () => ({ search,
+    () => ({ apiURL,
       meals,
       drinks,
       mealsCategories,
       drinksCategories,
       handleSearch }),
-    [search,
+    [apiURL,
       meals,
       drinks,
       mealsCategories,
       drinksCategories],
   );
   useEffect(() => {
-    getMeals(search).then((response) => setMeals(response));
-    getDrinks(search).then((response) => setDrinks(response));
+    getMeals(apiURL).then((response) => setMeals(response));
+    getDrinks(apiURL).then((response) => setDrinks(response));
     getMealsCategories().then((response) => setMealsCategories(response));
     getDrinksCategories().then((response) => setDrinksCategories(response));
-  }, [search]);
+  }, [apiURL]);
   return (
     <RecipesContext.Provider
       value={ data }
@@ -47,8 +47,8 @@ function Provider({ children }) {
   );
 }
 
-Provider.propTypes = {
+RecipesProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export default Provider;
+export default RecipesProvider;

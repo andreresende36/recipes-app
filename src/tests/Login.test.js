@@ -4,7 +4,9 @@ import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import renderWithRouter from '../images/renderWithRouter';
+import renderWithRouter from './helpers/renderWithRouter';
+import HeaderProvider from '../context/HeaderProvider';
+import RecipesProvider from '../context/RecipesProvider';
 
 // const mockFetch = () => {
 //   jest.spyOn(global, 'fetch')
@@ -15,7 +17,13 @@ describe('teste do página de login', () => {
 //   beforeEach(mockFetch);
 //   afterEach(cleanup);
   it('Inputs na página de login', async () => {
-    renderWithRouter(<App />);
+    renderWithRouter(
+      <RecipesProvider>
+        <HeaderProvider>
+          <App />
+        </HeaderProvider>
+      </RecipesProvider>,
+    );
     const emailInput = await screen.findByTestId('email-input');
     const passwordInput = await screen.findByTestId('password-input');
     const buttonInput = await screen.findByTestId('login-submit-btn');

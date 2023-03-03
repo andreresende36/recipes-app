@@ -5,7 +5,7 @@ import Recipes from '../components/Recipes';
 import Footer from '../components/Footer';
 import CategoryButton from '../components/CategoryButton';
 
-function Drinks() {
+function Drinks(props) {
   const { drinks, drinksCategories } = useContext(RecipesContext);
   const numberOfCategoriesToShow = 5;
   return (
@@ -15,7 +15,10 @@ function Drinks() {
           <CategoryButton key={ strCategory } strCategory={ strCategory } />
         ))}
       </div>
-      <Header />
+      <Header
+        headerType={ { title: 'Drinks', profileIcon: true, searchIcon: true } }
+        { ...props }
+      />
       <Recipes recipes={ drinks } />
       <Footer />
     </div>
