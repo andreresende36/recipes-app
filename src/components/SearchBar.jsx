@@ -76,7 +76,7 @@ function SearchBar(props) {
         id="search-ingredient"
         data-testid="ingredient-search-radio"
         value="ingredient"
-        onClick={ () => setSearchType('ingredient') }
+        onChange={ () => setSearchType('ingredient') }
       />
       <input
         type="radio"
@@ -84,7 +84,7 @@ function SearchBar(props) {
         id="search-name"
         data-testid="name-search-radio"
         value="name"
-        onClick={ () => setSearchType('name') }
+        onChange={ () => setSearchType('name') }
       />
       <input
         type="radio"
@@ -92,7 +92,7 @@ function SearchBar(props) {
         id="search-firstLetter"
         data-testid="first-letter-search-radio"
         value="firstLetter"
-        onClick={ () => setSearchType('firstLetter') }
+        onChange={ () => setSearchType('firstLetter') }
       />
       <button
         data-testid="exec-search-btn"
