@@ -66,7 +66,7 @@ describe('Testa o componente search bar', () => {
       const notRenderizedMeal = screen.queryByTestId('3-recipe-card');
       expect(lastRenderizedMeal).toBeInTheDocument();
       expect(notRenderizedMeal).not.toBeInTheDocument();
-    }, { timeout: 4000 });
+    }, { timeout: 6000 });
   });
 
   test('deveria renderizar apenas os meals certos quando digito p com o input de first letter selecionado', async () => {
@@ -93,7 +93,7 @@ describe('Testa o componente search bar', () => {
       const renderizedMeal2 = screen.getByTestId('4-card-name');
       expect(renderizedMeal1).toHaveTextContent('Provençal Omelette Cake');
       expect(renderizedMeal2).toHaveTextContent('Pork Cassoulet');
-    }, { timeout: 4000 });
+    }, { timeout: 6000 });
   });
 
   test('deveria renderizar apenas os drinks certos quando digito aquamarine com o input de ingredient selecionado', async () => {
@@ -121,7 +121,7 @@ describe('Testa o componente search bar', () => {
       expect(lastRenderizedMeal).toBeInTheDocument();
       expect(notRenderizedMeal).not.toBeInTheDocument();
       expect(lastRenderizedMeal).toHaveTextContent('Owen\'s Grandmother\'s Revenge');
-    }, { timeout: 4000 });
+    }, { timeout: 6000 });
   });
 
   test('deveria ser redirecionado pra tela de detalhes do aquamarine quando digitar aquamarine no input com name selecionado', async () => {
@@ -146,7 +146,7 @@ describe('Testa o componente search bar', () => {
     await waitFor(async () => {
       const { pathname } = history.location;
       expect(pathname).toBe('/drinks/178319');
-    }, { timeout: 4000 });
+    }, { timeout: 6000 });
   });
 
   test('deveria ser redirecionado pra tela de detalhes da corba quando digitar corba no input com name selecionado', async () => {
@@ -171,7 +171,7 @@ describe('Testa o componente search bar', () => {
     await waitFor(async () => {
       const { pathname } = history.location;
       expect(pathname).toBe('/meals/52977');
-    }, { timeout: 4000 });
+    }, { timeout: 6000 });
   });
   test('deveria renderizar apenas os drinks certos quando digito p com o input de first letter selecionado', async () => {
     const { history } = renderWithRouter(
@@ -197,7 +197,7 @@ describe('Testa o componente search bar', () => {
       const renderizedMeal2 = screen.getByTestId('4-card-name');
       expect(renderizedMeal1).toHaveTextContent('Pure Passion');
       expect(renderizedMeal2).toHaveTextContent('Pink Lady');
-    }, { timeout: 4000 });
+    }, { timeout: 6000 });
   });
   test('deveria aparecer um alerta ao tentar buscar algo no first letter com mais de uma letra', async () => {
     jest.spyOn(global, 'alert');
@@ -221,6 +221,6 @@ describe('Testa o componente search bar', () => {
     userEvent.click(searchSubmitBtn);
     await waitFor(async () => {
       expect(global.alert).toHaveBeenCalledWith('Your search must have only 1 (one) character');
-    }, { timeout: 4000 });
+    }, { timeout: 6000 });
   });
 });

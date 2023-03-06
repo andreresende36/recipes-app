@@ -18,6 +18,10 @@ export function RecipeDetails({ match, location, history }) {
   const [isFavorited, setIsFavorited] = useState(false);
 
   useEffect(() => {
+    if (!localStorage.getItem('favoriteRecipes')) {
+      return;
+    }
+
     if (JSON.parse(localStorage.getItem('favoriteRecipes'))
       ?.some((favoriteRecipe) => favoriteRecipe.id === match.params.id)) {
       setIsFavorited(true);
@@ -84,11 +88,17 @@ export function RecipeDetails({ match, location, history }) {
       image: data.strDrinkThumb || data.strMealThumb,
     };
     if (isFavorited) {
+      console.log('blasdkasdmnlkanmdskndskljndkjlndlkndsaklnkldnnskldsannnklnnd');
       const filteredFavoriteRecipes = JSON.parse(
         localStorage.getItem('favoriteRecipes'),
       )
-        .filter((favoriteRecipe) => favoriteRecipe.id !== match.params.id);
-      localStorage.setItem('favoriteRecipes', filteredFavoriteRecipes);
+        .filter((favoriteRecipe) => Number(favoriteRecipe.id)
+         !== Number(match.params.id));
+      if (filteredFavoriteRecipes.length === 0) {
+        localStorage.removeItem('favoriteRecipes');
+      } else {
+        localStorage.setItem('favoriteRecipes', filteredFavoriteRecipes);
+      }
       setIsFavorited(false);
     } else {
       if (localStorage.getItem('favoriteRecipes')) {
@@ -106,9 +116,11 @@ export function RecipeDetails({ match, location, history }) {
   };
 
   const mealsOrDrinks = location.pathname.includes('meals') ? 'meals' : 'drinks';
-  const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+  const inProgressRecipes = localStorage.getItem('inProgressRecipes')
     ? JSON.parse(localStorage.getItem('inProgressRecipes'))[mealsOrDrinks] : null;
   const idsInProgressRecipes = Object.keys(inProgressRecipes || {});
+  const doneRecipes = localStorage.getItem('doneRecipes')
+    ? JSON.parse(localStorage.getItem('doneRecipes')) : null;
 
   return (
     <div>
@@ -144,7 +156,7 @@ export function RecipeDetails({ match, location, history }) {
         <div className="carousel">
           {recommendations.map((recommendation, index) => (
             <RecommendationCard
-              key={ recommendation.id }
+              key={ recommendation.idMeal || recommendation.idDrink }
               title={ recommendation.strMeal || recommendation.strDrink }
               index={ index }
               src={ recommendation.strMealThumb || recommendation.strDrinkThumb }
@@ -152,7 +164,7 @@ export function RecipeDetails({ match, location, history }) {
           ))}
         </div>
       </div>
-      {JSON.parse(localStorage.getItem('doneRecipes'))
+      {doneRecipes
         ?.some((doneRecipe) => Number(doneRecipe.id) === Number(match.params.id)) ? '' : (
           <button
             data-testid="start-recipe-btn"
@@ -161,17 +173,11 @@ export function RecipeDetails({ match, location, history }) {
               () => history.push(`/${mealsOrDrinks}/${match.params.id}/in-progress`)
             }
           >
-            Start Recipe
+            {idsInProgressRecipes
+              ?.some((idsInProgressRecipe) => idsInProgressRecipe === match.params.id)
+              ? 'Continue Recipe' : 'Start Recipe'}
           </button>
         ) }
-      {idsInProgressRecipes
-        ?.some((idsInProgressRecipe) => idsInProgressRecipe === match.params.id) ? (
-          <button
-            data-testid="start-recipe-btn"
-          >
-            Continue Recipe
-          </button>
-        ) : ''}
       <button
         data-testid="share-btn"
         onClick={ () => {
