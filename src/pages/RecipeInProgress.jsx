@@ -7,6 +7,8 @@ import { getMealDetails, getDrinkDetails } from '../services/apiServices';
 
 function RecipeInProgress({ match: { params: { id } }, location: { pathname } }) {
   const [data, setData] = useState({});
+  const [ingredientsEntries, setIngredientsEntries] = useState([]);
+  const [measureEntries, setMeasureEntries] = useState([]);
   const {
     strMealThumb,
     strDrinkThumb = '',
@@ -21,7 +23,15 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
     } else {
       getDrinkDetails(id).then((response) => setData(response));
     }
-  }, [id, pathname]);
+    const ingredients = Object.entries(data).filter(
+      (entrie) => entrie[0].includes('strIngredient') && entrie[1],
+    );
+    setIngredientsEntries(ingredients);
+    const measures = Object.entries(data).filter(
+      (entrie) => entrie[0].includes('strMeasure') && entrie[1],
+    );
+    setMeasureEntries(measures);
+  }, [data, id, pathname]);
   return (
     <div>
       <img
@@ -51,17 +61,19 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
       <p data-testid="recipe-category">
         {strCategory}
       </p>
-      {/* {ingredientsEntries.map((ingredientEntrie, index) => (
-        <p
+      {ingredientsEntries.map((ingredientEntrie, index) => (
+        <label
           data-testid={ `${index}-ingredient-name-and-measure` }
           key={ ingredientEntrie[0] }
         >
+          <input type="checkbox" />
           {`Ingrediente ${index + 1}: `}
           {ingredientEntrie[1]}
           {' '}
           {measureEntries[index] ? measureEntries[index][1] : ''}
-        </p>
-      ))} */}
+          <br />
+        </label>
+      ))}
       <p data-testid="instructions">{strInstructions}</p>
       <Link
         to="/"
