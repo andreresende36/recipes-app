@@ -74,7 +74,6 @@ export function RecipeDetails({ match, location, history }) {
   }, [location.pathname, match.params]);
 
   const handleClickFavorite = () => {
-    console.log('bla');
     const objectToSet = {
       id: data.idMeal || data.idDrink,
       type: data.idMeal ? 'meal' : 'drink',
@@ -84,17 +83,26 @@ export function RecipeDetails({ match, location, history }) {
       name: data.strMeal || data.strDrink,
       image: data.strDrinkThumb || data.strMealThumb,
     };
-    if (localStorage.getItem('favoriteRecipes')) {
-      localStorage.setItem(
-        'favoriteRecipes',
-        JSON.stringify(
-          [...JSON.parse(localStorage.getItem('favoriteRecipes')), objectToSet],
-        ),
-      );
-      return;
+    if (isFavorited) {
+      const filteredFavoriteRecipes = JSON.parse(
+        localStorage.getItem('favoriteRecipes'),
+      )
+        .filter((favoriteRecipe) => favoriteRecipe.id !== match.params.id);
+      localStorage.setItem('favoriteRecipes', filteredFavoriteRecipes);
+      setIsFavorited(false);
+    } else {
+      if (localStorage.getItem('favoriteRecipes')) {
+        localStorage.setItem(
+          'favoriteRecipes',
+          JSON.stringify(
+            [...JSON.parse(localStorage.getItem('favoriteRecipes')), objectToSet],
+          ),
+        );
+        return;
+      }
+      localStorage.setItem('favoriteRecipes', JSON.stringify([objectToSet]));
+      setIsFavorited(true);
     }
-    localStorage.setItem('favoriteRecipes', JSON.stringify([objectToSet]));
-    setIsFavorited(true);
   };
 
   const mealsOrDrinks = location.pathname.includes('meals') ? 'meals' : 'drinks';
