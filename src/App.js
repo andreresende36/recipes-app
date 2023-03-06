@@ -7,16 +7,22 @@ import Meals from './pages/Meals';
 import Login from './pages/Login';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
-import Provider from './context/RecipesProvider';
+import RecipeInProgress from './pages/RecipeInProgress';
 import { RecipeDetails } from './pages/RecipeDetails';
-// import Header from './components/Header';
+import Provider from './context/RecipesProvider';
 
 function App() {
   return (
     <Provider>
       <Switch>
-        <Route path="/meals/:id/in-progress" />
-        <Route path="/drinks/:id/in-progress" />
+        <Route
+          path="/meals/:id/in-progress"
+          render={ (props) => <RecipeInProgress { ...props } /> }
+        />
+        <Route
+          path="/drinks/:id/in-progress"
+          render={ (props) => <RecipeInProgress { ...props } /> }
+        />
         <Route
           path="/meals/:id"
           render={ (props) => <RecipeDetails { ...props } /> }
@@ -29,10 +35,8 @@ function App() {
           path="/meals"
           render={ (props) => <Meals { ...props } /> }
         />
-
         <Route
           path="/drinks"
-          component={ Drinks }
           render={ (props) => <Drinks { ...props } /> }
         />
         <Route

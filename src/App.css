@@ -36,3 +36,13 @@
 .category-button {
   padding: 0.4rem 1rem;
 }
+
+.start-recipe-btn, .finish-recipe-btn {
+  font-size: 1.8rem;
+  padding: 0.8rem;
+}
+
+.share-btn, .favorite-btn {
+  background-color: transparent;
+  border: none;
+}

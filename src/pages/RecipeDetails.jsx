@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getDrinks, getMeals } from '../services/apiServices';
 import RecommendationCard from '../components/RecommendationCard';
 import '../styles/recipeDetails.css';
@@ -51,7 +52,6 @@ export function RecipeDetails({ match, location }) {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json())
       .then((apiData) => {
-        console.log(apiData);
         setData(apiData.drinks[0]);
       });
     // fetch das recomendações
@@ -62,46 +62,58 @@ export function RecipeDetails({ match, location }) {
 
   return (
     <div>
-      <div>
-        <img
-          data-testid="recipe-photo"
-          src={ data.strMealThumb || data.strDrinkThumb }
-          alt=""
-        />
-        <h3 data-testid="recipe-title">{data.strMeal || data.strDrink}</h3>
-        <p data-testid="recipe-category">
-          {location.pathname.includes('meals') ? data.strCategory : data.strAlcoholic}
+      <img
+        data-testid="recipe-photo"
+        src={ data.strMealThumb || data.strDrinkThumb }
+        alt={ `${data.strMeal || data.strDrink}` }
+      />
+      <h3 data-testid="recipe-title">{data.strMeal || data.strDrink}</h3>
+      <p data-testid="recipe-category">
+        {location.pathname.includes('meals') ? data.strCategory : data.strAlcoholic}
+      </p>
+      {ingredientsEntries.map((ingredientEntrie, index) => (
+        <p
+          data-testid={ `${index}-ingredient-name-and-measure` }
+          key={ ingredientEntrie[0] }
+        >
+          {`Ingrediente ${index + 1}: `}
+          {ingredientEntrie[1]}
+          {' '}
+          {measureEntries[index] ? measureEntries[index][1] : ''}
         </p>
-        {ingredientsEntries.map((ingredientEntrie, index) => (
-          <p
-            data-testid={ `${index}-ingredient-name-and-measure` }
-            key={ ingredientEntrie[0] }
-          >
-            {`Ingrediente ${index + 1}: `}
-            {ingredientEntrie[1]}
-            {' '}
-            {measureEntries[index] ? measureEntries[index][1] : ''}
-          </p>
+      ))}
+      <p data-testid="instructions">{data.strInstructions}</p>
+      {data.strYoutube && <iframe
+        width="853"
+        height="480"
+        src={ `https://www.youtube.com/embed/${getId(data.strYoutube)}` }
+        title="Embedded youtube"
+        data-testid="video"
+      />}
+      <div className="carousel">
+        {recommendations.map((recommendation, index) => (
+          <RecommendationCard
+            key={ recommendation.idMeal || recommendation.idDrink }
+            title={ recommendation.strMeal || recommendation.strDrink }
+            index={ index }
+            src={ recommendation.strMealThumb || recommendation.strDrinkThumb }
+          />
         ))}
-        <p data-testid="instructions">{data.strInstructions}</p>
-        {data.strYoutube && <iframe
-          width="853"
-          height="480"
-          src={ `https://www.youtube.com/embed/${getId(data.strYoutube)}` }
-          title="Embedded youtube"
-          data-testid="video"
-        />}
-        <div className="carousel">
-          {recommendations.map((recommendation, index) => (
-            <RecommendationCard
-              key={ recommendation.id }
-              title={ recommendation.strMeal || recommendation.strDrink }
-              index={ index }
-              src={ recommendation.strMealThumb || recommendation.strDrinkThumb }
-            />
-          ))}
-        </div>
       </div>
+      <Link
+        to={ {
+          pathname: `${location.pathname}/in-progress`,
+          state: { data, ingredientsEntries, measureEntries },
+        } }
+      >
+        <button
+          type="button"
+          className="start-recipe-btn"
+          data-testid="start-recipe-btn"
+        >
+          Start Recipe
+        </button>
+      </Link>
     </div>
   );
 }
