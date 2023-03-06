@@ -80,7 +80,7 @@ export function RecipeDetails({ match, location }) {
             {`Ingrediente ${index + 1}: `}
             {ingredientEntrie[1]}
             {' '}
-            {measureEntries[index][1]}
+            {measureEntries[index] ? measureEntries[index][1] : ''}
           </p>
         ))}
         <p data-testid="instructions">{data.strInstructions}</p>
