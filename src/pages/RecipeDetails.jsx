@@ -102,6 +102,13 @@ export function RecipeDetails({ match, location }) {
           ))}
         </div>
       </div>
+      <button
+        className="start-recipe-btn"
+        data-testid="start-recipe-btn"
+      >
+        Start Recipe
+
+      </button>
     </div>
   );
 }

@@ -9,7 +9,7 @@ function Profile(props) {
         headerType={ { title: 'Profile', profileIcon: true, searcIcon: false } }
         { ...props }
       />
-      <Footer />
+      <Footer { ...props } />
     </div>
   );
 }
