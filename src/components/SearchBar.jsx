@@ -5,7 +5,7 @@ import HeaderContext from '../context/HeaderContext';
 function SearchBar(props) {
   // apiURL vai ser passado pro provider pra usar na listagem de produtos, mas como n foi criado ainda deixei aqui
   // mas dai quando tiver o provider vai todos os estados e a função
-  const [apiURL, setApiURL] = useState('');
+  const [/* apiURL, */setApiURL] = useState('');
   const [searchType, setSearchType] = useState('ingredient');
   const [mealOrCockTail, setMealOrCockTail] = useState('meal');
 
