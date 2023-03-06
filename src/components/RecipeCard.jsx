@@ -10,7 +10,6 @@ function RecipeCard({ recipe = {}, index }) {
     strDrink = '' } = recipe;
   return (
     <Link to={ recipe.idMeal ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}` }>
-      {console.log(recipe)}
       <div
         className="recipe-card"
         data-testid={ `${index}-recipe-card` }

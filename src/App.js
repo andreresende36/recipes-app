@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Provider from './context/RecipesProvider';
+import { RecipeDetails } from './pages/RecipeDetails';
 // import Header from './components/Header';
 
 function App() {
@@ -16,8 +17,14 @@ function App() {
       <Switch>
         <Route path="/meals/:id/in-progress" />
         <Route path="/drinks/:id/in-progress" />
-        <Route path="/meals/:id" />
-        <Route path="/drinks/:id" />
+        <Route
+          path="/meals/:id"
+          render={ (props) => <RecipeDetails { ...props } /> }
+        />
+        <Route
+          path="/drinks/:id"
+          render={ (props) => <RecipeDetails { ...props } /> }
+        />
         <Route
           path="/meals"
           render={ (props) => <Meals { ...props } /> }
