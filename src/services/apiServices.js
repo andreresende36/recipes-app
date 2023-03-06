@@ -1,18 +1,20 @@
-const MEALS_SEARCH_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-const DRINKS_SEARCH_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 const MEALS_CATEGORIES_URL = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
 const DRINKS_CATEGORIES_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
 
-const getMeals = async (search, numberOfResponses) => {
-  const response = await fetch(`${MEALS_SEARCH_URL}${search}`);
+const defaultNumberOfResponses = 12;
+
+const getMeals = async (apiURL, numberOfResponses = defaultNumberOfResponses) => {
+  const response = await fetch(apiURL);
   const data = await response.json();
-  return data.meals.slice(0, numberOfResponses);
+  const result = data.meals?.slice(0, numberOfResponses) || [];
+  return result;
 };
 
-const getDrinks = async (search, numberOfResponses) => {
-  const response = await fetch(`${DRINKS_SEARCH_URL}${search}`);
+const getDrinks = async (apiURL, numberOfResponses) => {
+  const response = await fetch(apiURL);
   const data = await response.json();
-  return data.drinks.slice(0, numberOfResponses);
+  const result = data.drinks?.slice(0, numberOfResponses) || [];
+  return result;
 };
 
 const getMealsCategories = async () => {

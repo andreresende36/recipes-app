@@ -8,7 +8,9 @@ import {
   getDrinksCategories } from '../services/apiServices';
 
 function RecipesProvider({ children }) {
-  const [apiURL, setApiURL] = useState('');
+  const [apiURLMeals, setApiURLMeals] = useState('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const [apiURLDrinks, setApiURLDrinks] = useState('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [mealsCategories, setMealsCategories] = useState([]);
@@ -20,24 +22,28 @@ function RecipesProvider({ children }) {
   };
 
   const data = useMemo(
-    () => ({ apiURL,
+    () => ({ apiURLMeals,
+      apiURLDrinks,
       meals,
       drinks,
       mealsCategories,
       drinksCategories,
+      setApiURLMeals,
+      setApiURLDrinks,
       handleSearch }),
-    [apiURL,
+    [apiURLMeals,
+      apiURLDrinks,
       meals,
       drinks,
       mealsCategories,
       drinksCategories],
   );
   useEffect(() => {
-    getMeals(apiURL).then((response) => setMeals(response));
-    getDrinks(apiURL).then((response) => setDrinks(response));
+    getMeals(apiURLMeals).then((response) => setMeals(response));
+    getDrinks(apiURLDrinks).then((response) => setDrinks(response));
     getMealsCategories().then((response) => setMealsCategories(response));
     getDrinksCategories().then((response) => setDrinksCategories(response));
-  }, [apiURL]);
+  }, [apiURLDrinks, apiURLMeals]);
   return (
     <RecipesContext.Provider
       value={ data }

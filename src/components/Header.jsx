@@ -31,7 +31,7 @@ export default function Header(props) {
         />
       )}
       { searchingBarVisible && (
-        <SearchBar title={ title } />
+        <SearchBar title={ title } { ...props } />
       )}
       { searchIcon && (
         <button

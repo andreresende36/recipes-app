@@ -26,7 +26,7 @@ function App() {
         <Route
           path="/drinks"
           component={ Drinks }
-          render={ (props) => <Meals { ...props } /> }
+          render={ (props) => <Drinks { ...props } /> }
         />
         <Route
           path="/profile"
