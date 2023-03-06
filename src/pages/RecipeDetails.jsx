@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import { getDrinks, getMeals } from '../services/apiServices';
 import RecommendationCard from '../components/RecommendationCard';
 import '../styles/recipeDetails.css';
+import shareSvg from '../images/shareIcon.svg';
+
+const copy = require('clipboard-copy');
 
 export function RecipeDetails({ match, location, history }) {
   const [data, setData] = useState({});
   const [ingredientsEntries, setIngredientsEntries] = useState([]);
   const [measureEntries, setMeasureEntries] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
 
   useEffect(() => {
     const ingredients = Object.entries(data).filter(
@@ -127,6 +131,22 @@ export function RecipeDetails({ match, location, history }) {
             Continue Recipe
           </button>
         ) : ''}
+      <button
+        data-testid="share-btn"
+        onClick={ () => {
+          copy(`http://localhost:3000${location.pathname}`);
+          setIsLinkCopied(true);
+        } }
+      >
+        <img src={ shareSvg } alt="share-icon" />
+      </button>
+      {console.log(location)}
+      {isLinkCopied && <p>Link copied!</p>}
+      <label htmlFor="favorite-check">
+        Favoritar
+        <input type="checkbox" id="favorite-check" data-testid="favorite-btn" />
+      </label>
+
     </div>
   );
 }
