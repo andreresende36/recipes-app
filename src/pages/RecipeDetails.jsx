@@ -4,6 +4,8 @@ import { getDrinks, getMeals } from '../services/apiServices';
 import RecommendationCard from '../components/RecommendationCard';
 import '../styles/recipeDetails.css';
 import shareSvg from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
@@ -13,6 +15,14 @@ export function RecipeDetails({ match, location, history }) {
   const [measureEntries, setMeasureEntries] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem('favoriteRecipes'))
+      ?.some((favoriteRecipe) => favoriteRecipe.id === match.params.id)) {
+      setIsFavorited(true);
+    }
+  }, [match.params.id]);
 
   useEffect(() => {
     const ingredients = Object.entries(data).filter(
@@ -55,7 +65,6 @@ export function RecipeDetails({ match, location, history }) {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json())
       .then((apiData) => {
-        console.log(apiData);
         setData(apiData.drinks[0]);
       });
     // fetch das recomendações
@@ -63,6 +72,30 @@ export function RecipeDetails({ match, location, history }) {
     getMeals('https://www.themealdb.com/api/json/v1/1/search.php?s=', numberOfRecommendations)
       .then((response) => setRecommendations(response));
   }, [location.pathname, match.params]);
+
+  const handleClickFavorite = () => {
+    console.log('bla');
+    const objectToSet = {
+      id: data.idMeal || data.idDrink,
+      type: data.idMeal ? 'meal' : 'drink',
+      nationality: data.strArea || '',
+      category: data.strCategory || '',
+      alcoholicOrNot: data.strAlcoholic || '',
+      name: data.strMeal || data.strDrink,
+      image: data.strDrinkThumb || data.strMealThumb,
+    };
+    if (localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem(
+        'favoriteRecipes',
+        JSON.stringify(
+          [...JSON.parse(localStorage.getItem('favoriteRecipes')), objectToSet],
+        ),
+      );
+      return;
+    }
+    localStorage.setItem('favoriteRecipes', JSON.stringify([objectToSet]));
+    setIsFavorited(true);
+  };
 
   const mealsOrDrinks = location.pathname.includes('meals') ? 'meals' : 'drinks';
   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
@@ -140,13 +173,19 @@ export function RecipeDetails({ match, location, history }) {
       >
         <img src={ shareSvg } alt="share-icon" />
       </button>
-      {console.log(location)}
       {isLinkCopied && <p>Link copied!</p>}
-      <label htmlFor="favorite-check">
-        Favoritar
-        <input type="checkbox" id="favorite-check" data-testid="favorite-btn" />
-      </label>
-
+      <button
+        onClick={ handleClickFavorite }
+      >
+        <img
+          src={
+            isFavorited
+              ? blackHeartIcon : whiteHeartIcon
+          }
+          alt="favorite-icon"
+          data-testid="favorite-btn"
+        />
+      </button>
     </div>
   );
 }
