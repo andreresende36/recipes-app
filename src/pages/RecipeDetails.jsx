@@ -60,6 +60,11 @@ export function RecipeDetails({ match, location }) {
       .then((response) => setRecommendations(response));
   }, [location.pathname, match.params]);
 
+  const mealsOrDrinks = location.pathname.includes('meals') ? 'meals' : 'drinks';
+  const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+    ? JSON.parse(localStorage.getItem('inProgressRecipes'))[mealsOrDrinks] : null;
+  const idsInProgressRecipes = Object.keys(inProgressRecipes || {});
+
   return (
     <div>
       <div>
@@ -102,8 +107,6 @@ export function RecipeDetails({ match, location }) {
           ))}
         </div>
       </div>
-      {console.log(localStorage.getItem('doneRecipes'))}
-      {console.log(match.params.id)}
       {JSON.parse(localStorage.getItem('doneRecipes'))
         ?.some((doneRecipe) => Number(doneRecipe.id) === Number(match.params.id)) ? '' : (
           <button
@@ -113,6 +116,14 @@ export function RecipeDetails({ match, location }) {
             Start Recipe
           </button>
         ) }
+      {idsInProgressRecipes
+        ?.some((idsInProgressRecipe) => idsInProgressRecipe === match.params.id) ? (
+          <button
+            data-testid="start-recipe-btn"
+          >
+            Continue Recipe
+          </button>
+        ) : ''}
     </div>
   );
 }
