@@ -102,13 +102,17 @@ export function RecipeDetails({ match, location }) {
           ))}
         </div>
       </div>
-      <button
-        className="start-recipe-btn"
-        data-testid="start-recipe-btn"
-      >
-        Start Recipe
-
-      </button>
+      {console.log(localStorage.getItem('doneRecipes'))}
+      {console.log(match.params.id)}
+      {JSON.parse(localStorage.getItem('doneRecipes'))
+        ?.some((doneRecipe) => Number(doneRecipe.id) === Number(match.params.id)) ? '' : (
+          <button
+            data-testid="start-recipe-btn"
+            className="start-recipe-btn"
+          >
+            Start Recipe
+          </button>
+        ) }
     </div>
   );
 }
