@@ -63,7 +63,7 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
       </p>
       {ingredientsEntries.map((ingredientEntrie, index) => (
         <label
-          data-testid={ `${index}-ingredient-name-and-measure` }
+          data-testid={ `${index}-ingredient-step` }
           key={ ingredientEntrie[0] }
         >
           <input type="checkbox" />
