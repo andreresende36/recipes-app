@@ -88,7 +88,6 @@ export function RecipeDetails({ match, location, history }) {
       image: data.strDrinkThumb || data.strMealThumb,
     };
     if (isFavorited) {
-      console.log('blasdkasdmnlkanmdskndskljndkjlndlkndsaklnkldnnskldsannnklnnd');
       const filteredFavoriteRecipes = JSON.parse(
         localStorage.getItem('favoriteRecipes'),
       )
