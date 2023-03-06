@@ -4,7 +4,7 @@ import { getDrinks, getMeals } from '../services/apiServices';
 import RecommendationCard from '../components/RecommendationCard';
 import '../styles/recipeDetails.css';
 
-export function RecipeDetails({ match, location }) {
+export function RecipeDetails({ match, location, history }) {
   const [data, setData] = useState({});
   const [ingredientsEntries, setIngredientsEntries] = useState([]);
   const [measureEntries, setMeasureEntries] = useState([]);
@@ -112,6 +112,9 @@ export function RecipeDetails({ match, location }) {
           <button
             data-testid="start-recipe-btn"
             className="start-recipe-btn"
+            onClick={
+              () => history.push(`/${mealsOrDrinks}/${match.params.id}/in-progress`)
+            }
           >
             Start Recipe
           </button>
@@ -136,5 +139,8 @@ RecipeDetails.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 };
