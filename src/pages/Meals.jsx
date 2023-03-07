@@ -24,8 +24,8 @@ function Meals(props) {
         headerType={ { title: 'Meals', profileIcon: true, searchIcon: true } }
         { ...props }
       />
-      <Recipes recipes={ meals } />
-      <Footer />
+      <Recipes recipes={ meals } { ...props } />
+      <Footer { ...props } />
     </div>
   );
 }

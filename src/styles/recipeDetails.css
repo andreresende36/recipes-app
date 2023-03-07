@@ -8,3 +8,9 @@
   height: 250px;
   width: 250px;
 }
+
+.start-recipe-btn {
+  bottom: 0;
+  left: 50%;
+  position: fixed;
+}
