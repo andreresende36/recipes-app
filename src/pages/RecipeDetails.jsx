@@ -3,12 +3,30 @@ import PropTypes from 'prop-types';
 import { getDrinks, getMeals } from '../services/apiServices';
 import RecommendationCard from '../components/RecommendationCard';
 import '../styles/recipeDetails.css';
+import shareSvg from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
-export function RecipeDetails({ match, location }) {
+const copy = require('clipboard-copy');
+
+export function RecipeDetails({ match, location, history }) {
   const [data, setData] = useState({});
   const [ingredientsEntries, setIngredientsEntries] = useState([]);
   const [measureEntries, setMeasureEntries] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem('favoriteRecipes')) {
+      return;
+    }
+
+    if (JSON.parse(localStorage.getItem('favoriteRecipes'))
+      ?.some((favoriteRecipe) => favoriteRecipe.id === match.params.id)) {
+      setIsFavorited(true);
+    }
+  }, [match.params.id]);
 
   useEffect(() => {
     const ingredients = Object.entries(data).filter(
@@ -51,7 +69,6 @@ export function RecipeDetails({ match, location }) {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json())
       .then((apiData) => {
-        console.log(apiData);
         setData(apiData.drinks[0]);
       });
     // fetch das recomendações
@@ -59,6 +76,50 @@ export function RecipeDetails({ match, location }) {
     getMeals('https://www.themealdb.com/api/json/v1/1/search.php?s=', numberOfRecommendations)
       .then((response) => setRecommendations(response));
   }, [location.pathname, match.params]);
+
+  const handleClickFavorite = () => {
+    const objectToSet = {
+      id: data.idMeal || data.idDrink,
+      type: data.idMeal ? 'meal' : 'drink',
+      nationality: data.strArea || '',
+      category: data.strCategory || '',
+      alcoholicOrNot: data.strAlcoholic || '',
+      name: data.strMeal || data.strDrink,
+      image: data.strDrinkThumb || data.strMealThumb,
+    };
+    if (isFavorited) {
+      const filteredFavoriteRecipes = JSON.parse(
+        localStorage.getItem('favoriteRecipes'),
+      )
+        .filter((favoriteRecipe) => Number(favoriteRecipe.id)
+         !== Number(match.params.id));
+      if (filteredFavoriteRecipes.length === 0) {
+        localStorage.removeItem('favoriteRecipes');
+      } else {
+        localStorage.setItem('favoriteRecipes', filteredFavoriteRecipes);
+      }
+      setIsFavorited(false);
+    } else {
+      if (localStorage.getItem('favoriteRecipes')) {
+        localStorage.setItem(
+          'favoriteRecipes',
+          JSON.stringify(
+            [...JSON.parse(localStorage.getItem('favoriteRecipes')), objectToSet],
+          ),
+        );
+        return;
+      }
+      localStorage.setItem('favoriteRecipes', JSON.stringify([objectToSet]));
+      setIsFavorited(true);
+    }
+  };
+
+  const mealsOrDrinks = location.pathname.includes('meals') ? 'meals' : 'drinks';
+  const inProgressRecipes = localStorage.getItem('inProgressRecipes')
+    ? JSON.parse(localStorage.getItem('inProgressRecipes'))[mealsOrDrinks] : null;
+  const idsInProgressRecipes = Object.keys(inProgressRecipes || {});
+  const doneRecipes = localStorage.getItem('doneRecipes')
+    ? JSON.parse(localStorage.getItem('doneRecipes')) : null;
 
   return (
     <div>
@@ -94,7 +155,7 @@ export function RecipeDetails({ match, location }) {
         <div className="carousel">
           {recommendations.map((recommendation, index) => (
             <RecommendationCard
-              key={ recommendation.id }
+              key={ recommendation.idMeal || recommendation.idDrink }
               title={ recommendation.strMeal || recommendation.strDrink }
               index={ index }
               src={ recommendation.strMealThumb || recommendation.strDrinkThumb }
@@ -102,6 +163,42 @@ export function RecipeDetails({ match, location }) {
           ))}
         </div>
       </div>
+      {doneRecipes
+        ?.some((doneRecipe) => Number(doneRecipe.id) === Number(match.params.id)) ? '' : (
+          <button
+            data-testid="start-recipe-btn"
+            className="start-recipe-btn"
+            onClick={
+              () => history.push(`/${mealsOrDrinks}/${match.params.id}/in-progress`)
+            }
+          >
+            {idsInProgressRecipes
+              ?.some((idsInProgressRecipe) => idsInProgressRecipe === match.params.id)
+              ? 'Continue Recipe' : 'Start Recipe'}
+          </button>
+        ) }
+      <button
+        data-testid="share-btn"
+        onClick={ () => {
+          copy(`http://localhost:3000${location.pathname}`);
+          setIsLinkCopied(true);
+        } }
+      >
+        <img src={ shareSvg } alt="share-icon" />
+      </button>
+      {isLinkCopied && <p>Link copied!</p>}
+      <button
+        onClick={ handleClickFavorite }
+      >
+        <img
+          src={
+            isFavorited
+              ? blackHeartIcon : whiteHeartIcon
+          }
+          alt="favorite-icon"
+          data-testid="favorite-btn"
+        />
+      </button>
     </div>
   );
 }
@@ -114,5 +211,8 @@ RecipeDetails.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 };
