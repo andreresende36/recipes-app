@@ -1,0 +1,1 @@
+npm run test-coverage -- --collectCoverageFrom=src/pages/$1.jsx
