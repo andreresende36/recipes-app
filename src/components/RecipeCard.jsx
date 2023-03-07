@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
-function RecipeCard({ recipe = {}, index }) {
+function RecipeCard({ recipe = {}, index, history }) {
   const {
     strMealThumb = '',
     strDrinkThumb = '',
     strMeal = '',
     strDrink = '' } = recipe;
   return (
-    <Link to={ recipe.idMeal ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}` }>
+    <button
+      onClick={ () => history.push(
+        recipe.idMeal ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}`,
+      ) }
+    >
       <div
         className="recipe-card"
         data-testid={ `${index}-recipe-card` }
@@ -27,7 +30,7 @@ function RecipeCard({ recipe = {}, index }) {
           { strMeal || strDrink }
         </span>
       </div>
-    </Link>
+    </button>
   );
 }
 
@@ -39,6 +42,9 @@ RecipeCard.propTypes = {
     strDrink: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default RecipeCard;

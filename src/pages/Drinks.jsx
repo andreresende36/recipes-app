@@ -24,8 +24,8 @@ function Drinks(props) {
         headerType={ { title: 'Drinks', profileIcon: true, searchIcon: true } }
         { ...props }
       />
-      <Recipes recipes={ drinks } />
-      <Footer />
+      <Recipes recipes={ drinks } { ...props } />
+      <Footer { ...props } />
     </div>
   );
 }

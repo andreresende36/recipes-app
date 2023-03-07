@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RecipeCard from './RecipeCard';
 
-function Recipes({ recipes }) {
+function Recipes({ recipes, history }) {
   const numberOfRecipesToShow = 12;
   return (
     <div className="recipes-container">
@@ -12,6 +12,7 @@ function Recipes({ recipes }) {
           recipe={ recipe }
           index={ index }
           className="recipe-card"
+          history={ history }
         />
       ))}
     </div>
@@ -25,6 +26,7 @@ Recipes.propTypes = {
     strMeal: PropTypes.string,
     strDrink: PropTypes.string,
   })).isRequired,
+  history: PropTypes.shape({}).isRequired,
 };
 
 export default Recipes;
