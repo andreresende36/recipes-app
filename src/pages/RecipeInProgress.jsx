@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteIcon from '../images/whiteHeartIcon.svg';
 import { getMealDetails, getDrinkDetails } from '../services/apiServices';
+import IngredientCheckbox from '../components/IngredientCheckbox';
 
 function RecipeInProgress({ match: { params: { id } }, location: { pathname } }) {
   const [data, setData] = useState({});
@@ -31,7 +32,22 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
       (entrie) => entrie[0].includes('strMeasure') && entrie[1],
     );
     setMeasureEntries(measures);
-  }, [data, id, pathname]);
+  }, [data, id, pathname, strMeal, strDrink]);
+
+  useEffect(() => {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const initialObject = { id, ingredientIsChecked: {} };
+    for (let i = 0; i <= 6; i += 1) {
+      initialObject.ingredientIsChecked[i] = false;
+    }
+    if (!inProgressRecipes) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify([initialObject]));
+    } else if (!inProgressRecipes.some((recipe) => recipe.id === id)) {
+      const newArray = [...inProgressRecipes, { id, ingredienteIsChecked: {} }];
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newArray));
+    }
+  }, [id, strMeal, strDrink]);
+
   return (
     <div>
       <img
@@ -62,17 +78,13 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
         {strCategory}
       </p>
       {ingredientsEntries.map((ingredientEntrie, index) => (
-        <label
-          data-testid={ `${index}-ingredient-step` }
-          key={ ingredientEntrie[0] }
-        >
-          <input type="checkbox" />
-          {`Ingrediente ${index + 1}: `}
-          {ingredientEntrie[1]}
-          {' '}
-          {measureEntries[index] ? measureEntries[index][1] : ''}
-          <br />
-        </label>
+        <IngredientCheckbox
+          key={ `ingredient-${index}` }
+          ingredientEntrie={ ingredientEntrie }
+          measureEntries={ measureEntries }
+          index={ index }
+          recipeId={ id }
+        />
       ))}
       <p data-testid="instructions">{strInstructions}</p>
       <Link
