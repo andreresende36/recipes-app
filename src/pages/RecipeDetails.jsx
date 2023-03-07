@@ -123,42 +123,26 @@ export function RecipeDetails({ match, location, history }) {
 
   return (
     <div>
-      <img
-        data-testid="recipe-photo"
-        src={ data.strMealThumb || data.strDrinkThumb }
-        alt={ `${data.strMeal || data.strDrink}` }
-      />
-      <h3 data-testid="recipe-title">{data.strMeal || data.strDrink}</h3>
-      <p data-testid="recipe-category">
-        {location.pathname.includes('meals') ? data.strCategory : data.strAlcoholic}
-      </p>
-      {ingredientsEntries.map((ingredientEntrie, index) => (
-        <p
-          data-testid={ `${index}-ingredient-name-and-measure` }
-          key={ ingredientEntrie[0] }
-        >
-          {`Ingrediente ${index + 1}: `}
-          {ingredientEntrie[1]}
-          {' '}
-          {measureEntries[index] ? measureEntries[index][1] : ''}
+      <div>
+        <img
+          data-testid="recipe-photo"
+          src={ data.strMealThumb || data.strDrinkThumb }
+          alt=""
+        />
+        <h3 data-testid="recipe-title">{data.strMeal || data.strDrink}</h3>
+        <p data-testid="recipe-category">
+          {location.pathname.includes('meals') ? data.strCategory : data.strAlcoholic}
         </p>
-      ))}
-      <p data-testid="instructions">{data.strInstructions}</p>
-      {data.strYoutube && <iframe
-        width="853"
-        height="480"
-        src={ `https://www.youtube.com/embed/${getId(data.strYoutube)}` }
-        title="Embedded youtube"
-        data-testid="video"
-      />}
-      <div className="carousel">
-        {recommendations.map((recommendation, index) => (
-          <RecommendationCard
-            key={ recommendation.idMeal || recommendation.idDrink }
-            title={ recommendation.strMeal || recommendation.strDrink }
-            index={ index }
-            src={ recommendation.strMealThumb || recommendation.strDrinkThumb }
-          />
+        {ingredientsEntries.map((ingredientEntrie, index) => (
+          <p
+            data-testid={ `${index}-ingredient-name-and-measure` }
+            key={ ingredientEntrie[0] }
+          >
+            {`Ingrediente ${index + 1}: `}
+            {ingredientEntrie[1]}
+            {' '}
+            {measureEntries[index] ? measureEntries[index][1] : ''}
+          </p>
         ))}
         <p data-testid="instructions">{data.strInstructions}</p>
         {data.strYoutube && <iframe

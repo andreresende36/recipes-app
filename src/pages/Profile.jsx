@@ -10,7 +10,6 @@ function Profile(props) {
   const history = useHistory();
   useEffect(() => {
     let emailStorage = localStorage.getItem('user');
-    console.log(emailStorage);
     emailStorage = JSON.parse(emailStorage);
     setEmail(emailStorage.email);
   }, []);

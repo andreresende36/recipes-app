@@ -10,7 +10,9 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
   const [data, setData] = useState({});
   const [ingredientsEntries, setIngredientsEntries] = useState([]);
   const [measureEntries, setMeasureEntries] = useState([]);
-  const [inProgressRecipe, setInProgressRecipe] = useState([]);
+  const [ingredientsUsed, setIngredientsUsed] = useState([]);
+  const [typeOfRecipe, setTypeOfRecipe] = useState('');
+  const [deleteItem, setDeleteItem] = useState(false);
   const {
     strMealThumb,
     strDrinkThumb = '',
@@ -22,8 +24,10 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
   useEffect(() => {
     if (pathname.includes('meals')) {
       getMealDetails(id).then((response) => setData(response));
+      setTypeOfRecipe('meals');
     } else {
       getDrinkDetails(id).then((response) => setData(response));
+      setTypeOfRecipe('drinks');
     }
     const ingredients = Object.entries(data).filter(
       (entrie) => entrie[0].includes('strIngredient') && entrie[1],
@@ -37,20 +41,44 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
 
   useEffect(() => {
     const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const initialObject = { id, ingredientIsChecked: {} };
+    const idAndIngredientsUsed = { [id]: [] };
+    const initialObject = {
+      drinks: typeOfRecipe === 'drinks' ? idAndIngredientsUsed : {},
+      meals: typeOfRecipe === 'meals' ? idAndIngredientsUsed : {},
+    };
     // Se não hover nada salvo no localStorage, cria-se o localStorage com o initialObject e seta o estado
-    if (!inProgressStorage) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify([initialObject]));
-      setInProgressRecipe(initialObject);
-    // Caso haja algo, mas não tenha nada referente ao ID atual, adiciona-se o initialObject pata o ID atual
-    } else if (!inProgressStorage.some((recipe) => recipe.id === id)) {
-      const newArray = [...inProgressStorage, initialObject];
-      localStorage.setItem('inProgressRecipes', JSON.stringify(newArray));
-      setInProgressRecipe(initialObject);
-    } else if (inProgressStorage.some((recipe) => recipe.id === id)) {
-      setInProgressRecipe(inProgressStorage.find((recipe) => recipe.id === id));
+    if (typeOfRecipe !== '' && !inProgressStorage) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(initialObject));
+      setIngredientsUsed(initialObject[typeOfRecipe][id]);
+    // Caso haja algo, mas não tenha nada referente ao ID atual, adiciona-se o array vazio [] pata o ID atual
+    } else if (
+      typeOfRecipe !== '' && !Object.keys(inProgressStorage[typeOfRecipe])
+        ?.some((item) => item === id)
+    ) {
+      inProgressStorage[typeOfRecipe][id] = [];
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressStorage));
+      setIngredientsUsed(inProgressStorage[typeOfRecipe][id]);
+    // Caso haja algo e tenha algo referente ao ID atual seta o estado
+    } else if (
+      typeOfRecipe !== '' && Object.keys(inProgressStorage[typeOfRecipe])
+        ?.some((item) => item === id)
+    ) {
+      setIngredientsUsed(inProgressStorage[typeOfRecipe][id]);
     }
-  }, [id]);
+  }, [id, typeOfRecipe]);
+  useEffect(() => {
+    const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    // Resgata o que tem salvo no localStorage de ingredientes salvos
+    if (typeOfRecipe !== '' && ingredientsUsed.length !== 0) {
+      inProgressStorage[typeOfRecipe][id] = ingredientsUsed;
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressStorage));
+    }
+    if (typeOfRecipe !== '' && deleteItem) {
+      delete inProgressStorage[typeOfRecipe][id];
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressStorage));
+      setDeleteItem(false);
+    }
+  }, [id, typeOfRecipe, ingredientsUsed, deleteItem]);
   return (
     <div>
       <img
@@ -87,7 +115,10 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
           measureEntries={ measureEntries }
           index={ index }
           recipeId={ id }
-          done={ inProgressRecipe.ingredientIsChecked[index] }
+          ingredientsUsed={ ingredientsUsed }
+          setIngredientsUsed={ setIngredientsUsed }
+          isChecked={ ingredientsUsed.some((item) => item === ingredientEntrie[1]) }
+          setDeleteItem={ setDeleteItem }
         />
       ))}
       <p data-testid="instructions">{strInstructions}</p>

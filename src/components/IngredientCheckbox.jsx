@@ -1,27 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 function IngredientCheckbox({
   ingredientEntrie,
   measureEntries,
   index,
-  recipeId,
-  done = false }) {
-  const [isChecked, setIsChecked] = useState(done);
-  const handleCheck = ({ target: { checked } }) => {
-    setIsChecked(checked);
-  };
-  useEffect(() => {
-    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const newArray = inProgressRecipes.map((recipe) => {
-      if (recipe.id === recipeId) {
-        return { id: recipe.id,
-          ingredientIsChecked: { ...recipe.ingredientIsChecked, [index]: isChecked } };
+  ingredientsUsed,
+  setIngredientsUsed,
+  isChecked,
+  setDeleteItem }) {
+  const handleCheck = ({ target: { value, checked } }) => {
+    if (checked) {
+      setIngredientsUsed([...ingredientsUsed, value]);
+    } else {
+      const newIngredients = ingredientsUsed.filter((item) => item !== value);
+      setIngredientsUsed(newIngredients);
+      if (newIngredients.length === 0) {
+        setDeleteItem(true);
       }
-      return recipe;
-    });
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newArray));
-  }, [recipeId, index, isChecked]);
+    }
+  };
   return (
     <div>
       <label
@@ -30,6 +28,7 @@ function IngredientCheckbox({
       >
         <input
           type="checkbox"
+          value={ ingredientEntrie[1] }
           checked={ isChecked }
           onChange={ handleCheck }
         />
@@ -49,8 +48,10 @@ IngredientCheckbox.propTypes = {
   measureEntries:
     PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired)).isRequired,
   index: PropTypes.number.isRequired,
-  recipeId: PropTypes.string.isRequired,
-  done: PropTypes.bool,
+  ingredientsUsed: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setIngredientsUsed: PropTypes.func.isRequired,
+  isChecked: PropTypes.bool.isRequired,
+  setDeleteItem: PropTypes.func.isRequired,
 };
 
 export default IngredientCheckbox;
