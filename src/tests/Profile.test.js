@@ -13,7 +13,7 @@ import Profile from '../pages/Profile';
 //     .mockImplementation(() => Promise.resolve({ json: () => Promise.resolve(testData) }));
 // };
 
-const mockLocalStorage = (function () {
+const mockLocalStorage = (function bla() {
   let store = { user: JSON.stringify({ email: 'email@email.com' }) };
   return {
     getItem(key) {

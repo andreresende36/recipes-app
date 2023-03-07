@@ -41,7 +41,7 @@ function Profile(props) {
         Favorite Recipes
       </button>
       <button data-testid="profile-logout-btn" onClick={ handleLogout }>Logout</button>
-      <Footer  { ...props } />
+      <Footer { ...props } />
 
     </div>
   );
