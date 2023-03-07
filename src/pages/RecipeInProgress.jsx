@@ -10,6 +10,7 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
   const [data, setData] = useState({});
   const [ingredientsEntries, setIngredientsEntries] = useState([]);
   const [measureEntries, setMeasureEntries] = useState([]);
+  const [inProgressRecipe, setInProgressRecipe] = useState([]);
   const {
     strMealThumb,
     strDrinkThumb = '',
@@ -35,19 +36,21 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
   }, [data, id, pathname, strMeal, strDrink]);
 
   useEffect(() => {
-    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const initialObject = { id, ingredientIsChecked: {} };
-    for (let i = 0; i <= 6; i += 1) {
-      initialObject.ingredientIsChecked[i] = false;
-    }
-    if (!inProgressRecipes) {
+    // Se não hover nada salvo no localStorage, cria-se o localStorage com o initialObject e seta o estado
+    if (!inProgressStorage) {
       localStorage.setItem('inProgressRecipes', JSON.stringify([initialObject]));
-    } else if (!inProgressRecipes.some((recipe) => recipe.id === id)) {
-      const newArray = [...inProgressRecipes, { id, ingredienteIsChecked: {} }];
+      setInProgressRecipe(initialObject);
+    // Caso haja algo, mas não tenha nada referente ao ID atual, adiciona-se o initialObject pata o ID atual
+    } else if (!inProgressStorage.some((recipe) => recipe.id === id)) {
+      const newArray = [...inProgressStorage, initialObject];
       localStorage.setItem('inProgressRecipes', JSON.stringify(newArray));
+      setInProgressRecipe(initialObject);
+    } else if (inProgressStorage.some((recipe) => recipe.id === id)) {
+      setInProgressRecipe(inProgressStorage.find((recipe) => recipe.id === id));
     }
-  }, [id, strMeal, strDrink]);
-
+  }, [id]);
   return (
     <div>
       <img
@@ -84,6 +87,7 @@ function RecipeInProgress({ match: { params: { id } }, location: { pathname } })
           measureEntries={ measureEntries }
           index={ index }
           recipeId={ id }
+          done={ inProgressRecipe.ingredientIsChecked[index] }
         />
       ))}
       <p data-testid="instructions">{strInstructions}</p>

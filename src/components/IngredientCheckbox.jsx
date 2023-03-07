@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-function IngredientCheckbox({ ingredientEntrie, measureEntries, index, recipeId }) {
-  const [isChecked, setIsChecked] = useState(false);
+function IngredientCheckbox({
+  ingredientEntrie,
+  measureEntries,
+  index,
+  recipeId,
+  done = false }) {
+  const [isChecked, setIsChecked] = useState(done);
   const handleCheck = ({ target: { checked } }) => {
     setIsChecked(checked);
   };
   useEffect(() => {
-    // const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    // const newArray = inProgressRecipes.map((recipe) => {
-    //   if (recipe.id === recipeId) {
-    //     return { id: recipe.id,
-    //       ingredientIsChecked: { ...recipe.ingredientIsChecked, [index]: isChecked } };
-    //   }
-    //   return recipe;
-    // });
-    // localStorage.setItem('inProgressRecipes', JSON.stringify(newArray));
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const newArray = inProgressRecipes.map((recipe) => {
+      if (recipe.id === recipeId) {
+        return { id: recipe.id,
+          ingredientIsChecked: { ...recipe.ingredientIsChecked, [index]: isChecked } };
+      }
+      return recipe;
+    });
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newArray));
   }, [recipeId, index, isChecked]);
   return (
     <div>
@@ -45,6 +50,7 @@ IngredientCheckbox.propTypes = {
     PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired)).isRequired,
   index: PropTypes.number.isRequired,
   recipeId: PropTypes.string.isRequired,
+  done: PropTypes.bool,
 };
 
 export default IngredientCheckbox;
