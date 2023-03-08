@@ -92,7 +92,7 @@ export function RecipeDetails({ match, location, history }) {
         localStorage.getItem('favoriteRecipes'),
       )
         .filter((favoriteRecipe) => Number(favoriteRecipe.id)
-         !== Number(match.params.id));
+        !== Number(match.params.id));
       if (filteredFavoriteRecipes.length === 0) {
         localStorage.removeItem('favoriteRecipes');
       } else {
