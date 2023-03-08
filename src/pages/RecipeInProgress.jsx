@@ -10,6 +10,7 @@ import IngredientCheckbox from '../components/IngredientCheckbox';
 const copy = require('clipboard-copy');
 
 function RecipeInProgress({ match: { params: { id } }, location }) {
+  // Declaração de estados e variáveis
   const { pathname } = location;
   const [data, setData] = useState({});
   const [ingredientsEntries, setIngredientsEntries] = useState([]);
@@ -32,17 +33,7 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
     strInstructions = '',
   } = data;
 
-  useEffect(() => {
-    if (!localStorage.getItem('favoriteRecipes')) {
-      return;
-    }
-
-    if (JSON.parse(localStorage.getItem('favoriteRecipes'))
-      ?.some((favoriteRecipe) => favoriteRecipe.id === id)) {
-      setIsFavorited(true);
-    }
-  }, [id]);
-
+  // Função que lida com o clique no botão de favoritar
   const handleClickFavorite = () => {
     const objectToSet = {
       id: idMeal || idDrink,
@@ -62,7 +53,7 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
       if (filteredFavoriteRecipes.length === 0) {
         localStorage.removeItem('favoriteRecipes');
       } else {
-        localStorage.setItem('favoriteRecipes', filteredFavoriteRecipes);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(filteredFavoriteRecipes));
       }
       setIsFavorited(false);
     } else {
@@ -73,6 +64,7 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
             [...JSON.parse(localStorage.getItem('favoriteRecipes')), objectToSet],
           ),
         );
+        setIsFavorited(true);
         return;
       }
       localStorage.setItem('favoriteRecipes', JSON.stringify([objectToSet]));
@@ -80,6 +72,19 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
     }
   };
 
+  // Recupera os favoritos salvos no localStorage
+  useEffect(() => {
+    if (!localStorage.getItem('favoriteRecipes')) {
+      return;
+    }
+
+    if (JSON.parse(localStorage.getItem('favoriteRecipes'))
+      ?.some((favoriteRecipe) => favoriteRecipe.id === id)) {
+      setIsFavorited(true);
+    }
+  }, [id]);
+
+  // Buscando os ingredientes, medidas e tipo de receitas ('meal' ou 'drink'). Salva nos estados
   useEffect(() => {
     if (pathname.includes('meals')) {
       getMealDetails(id).then((response) => setData(response));
@@ -98,6 +103,7 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
     setMeasureEntries(measures);
   }, [data, id, pathname]);
 
+  // Lida com a variável 'inProgressRecipes' no localStorage
   useEffect(() => {
     const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const idAndIngredientsUsed = { [id]: [] };
@@ -126,9 +132,9 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
     }
   }, [id, typeOfRecipe]);
 
+  // Resgata o que tem salvo no localStorage de ingredientes salvos e deleta o id do localStorage se não houver nenhum ingrediente marcado
   useEffect(() => {
     const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    // Resgata o que tem salvo no localStorage de ingredientes salvos
     if (typeOfRecipe !== '' && ingredientsUsed.length !== 0) {
       inProgressStorage[typeOfRecipe][id] = ingredientsUsed;
       localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressStorage));
@@ -140,7 +146,9 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
     }
   }, [id, typeOfRecipe, ingredientsUsed, deleteItem]);
 
-  // console.log(ingredientsEntries);
+  // Varável que salva o resultado da pergunta: 'Todas os ingredientes da receita foram marcados?'
+  const usedIngredientsValidation = ingredientsEntries.length === ingredientsUsed.length;
+
   return (
     <div>
       <img
@@ -185,7 +193,10 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
           recipeId={ id }
           ingredientsUsed={ ingredientsUsed }
           setIngredientsUsed={ setIngredientsUsed }
-          isChecked={ ingredientsUsed.some((item) => item === ingredientEntrie[1]) }
+          isChecked={
+            ingredientsUsed.some((item) => item === `${
+              ingredientEntrie[1]} ${measureEntries[index][1]}`)
+          }
           setDeleteItem={ setDeleteItem }
         />
       ))}
@@ -197,7 +208,7 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
           type="button"
           className="finish-recipe-btn"
           data-testid="finish-recipe-btn"
-          // disabled={ true }
+          disabled={ !usedIngredientsValidation }
         >
           Finish Recipe
         </button>

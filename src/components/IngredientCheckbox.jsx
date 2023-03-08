@@ -28,14 +28,12 @@ function IngredientCheckbox({
       >
         <input
           type="checkbox"
-          value={ ingredientEntrie[1] }
+          value={ `${ingredientEntrie[1]} ${measureEntries[index][1]}` }
           checked={ isChecked }
           onChange={ handleCheck }
         />
         {`Ingrediente ${index + 1}: `}
-        {ingredientEntrie[1]}
-        {' '}
-        {measureEntries[index] ? measureEntries[index][1] : ''}
+        {`${ingredientEntrie[1]} ${measureEntries[index][1]}`}
         <br />
       </label>
     </div>
