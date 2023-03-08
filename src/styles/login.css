@@ -1,0 +1,115 @@
+.card-login{
+
+}
+
+/* Ellipse 1 */
+
+.ellipse1{ 
+position: absolute;
+width: 148.5px;
+height: 148.5px;
+left: 107.71px;
+top: 87.92px;
+
+background: #FCDC36;
+
+ }
+
+/* Rectangle 2 */
+
+.ellipse2{ 
+position: absolute;
+width: 195.75px;
+height: 45px;
+left: 83.25px;
+top: 164.67px;
+
+background: #FCC436;
+
+ }
+
+/* Recipes */
+
+.ellipse3{ 
+position: absolute;
+width: 154.18px;
+height: 28.83px;
+left: 101.18px;
+top: 174.09px;
+
+background: #41197F;
+
+ }
+
+/* App */
+
+.ellipse4{ 
+position: absolute;
+width: 25.86px;
+height: 10.26px;
+left: 166.96px;
+top: 215.61px;
+
+background: #41197F;
+
+ }
+
+/* Vector */
+
+.vector1{ 
+position: absolute;
+left: 38.59%;
+right: 37.28%;
+top: 14.58%;
+bottom: 79.99%;
+
+background: #41197F;
+
+ }
+
+/* Vector */
+
+.vector2{ 
+position: absolute;
+left: 37.34%;
+right: 36.03%;
+top: 20.01%;
+bottom: 79.06%;
+
+background: #8958A3;
+
+ }
+
+/* Vector */
+
+.vector4{ 
+position: absolute;
+left: 53.34%;
+right: 36.25%;
+top: 9.9%;
+bottom: 85.85%;
+
+background: #E44343;
+
+ }
+.texto {
+
+}
+
+.input {
+
+}
+
+@media screen and (max-width: 480px){
+
+}
+
+.tomate {
+    width: 458px;
+    height: 279px;
+    background: url('../images/tomate.png');
+    filter: drop-shadow(0px 7px 15px rgba(68, 73, 85, 0.25));
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+}

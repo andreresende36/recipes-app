@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import '../styles/login.css';
+import { ReactComponent as ReactLogo } from '../images/recipes_logo.svg';
 // import '../styles/tailWind.css';
 
 export default function Login() {
@@ -27,8 +29,13 @@ export default function Login() {
   };
 
   return (
-    <div className="bg-slate-600 w-[300px] p-[40px] ">
-      <h3 className="decoration-slate-50">email</h3>
+    <div className="card-login">
+      <ReactLogo />
+      <img
+        alt="tomate"
+        className="tomate"
+      />
+      <h3 className="texto">email</h3>
       <input
         type="text"
         name="email"
