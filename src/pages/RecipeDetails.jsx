@@ -96,7 +96,7 @@ export function RecipeDetails({ match, location, history }) {
       if (filteredFavoriteRecipes.length === 0) {
         localStorage.removeItem('favoriteRecipes');
       } else {
-        localStorage.setItem('favoriteRecipes', filteredFavoriteRecipes);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(filteredFavoriteRecipes));
       }
       setIsFavorited(false);
     } else {
@@ -107,6 +107,7 @@ export function RecipeDetails({ match, location, history }) {
             [...JSON.parse(localStorage.getItem('favoriteRecipes')), objectToSet],
           ),
         );
+        setIsFavorited(true);
         return;
       }
       localStorage.setItem('favoriteRecipes', JSON.stringify([objectToSet]));
