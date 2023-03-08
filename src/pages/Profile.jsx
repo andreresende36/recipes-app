@@ -8,9 +8,14 @@ import Header from '../components/Header';
 function Profile(props) {
   const [email, setEmail] = useState('');
   const history = useHistory();
+
   useEffect(() => {
     let emailStorage = localStorage.getItem('user');
-    emailStorage = JSON.parse(emailStorage);
+    if (emailStorage === null) {
+      emailStorage = 'not valid';
+    } else {
+      emailStorage = JSON.parse(emailStorage);
+    }
     setEmail(emailStorage.email);
   }, []);
 
