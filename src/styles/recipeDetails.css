@@ -14,3 +14,7 @@
   left: 50%;
   position: fixed;
 }
+
+.div {
+  background-color: red;
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import '../styles/tailWind.css';
+// import '../styles/tailWind.css';
 
 export default function Login() {
   const [disabled, setDisabled] = useState(true);
