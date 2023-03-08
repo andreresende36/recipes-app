@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import shareSvg from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -9,7 +8,7 @@ import IngredientCheckbox from '../components/IngredientCheckbox';
 
 const copy = require('clipboard-copy');
 
-function RecipeInProgress({ match: { params: { id } }, location }) {
+function RecipeInProgress({ match: { params: { id } }, location, history }) {
   // Declaração de estados e variáveis
   const { pathname } = location;
   const [data, setData] = useState({});
@@ -31,8 +30,8 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
     strDrink = '',
     strCategory = '',
     strInstructions = '',
+    strTags = '',
   } = data;
-
   // Função que lida com o clique no botão de favoritar
   const handleClickFavorite = () => {
     const objectToSet = {
@@ -71,19 +70,16 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
       setIsFavorited(true);
     }
   };
-
   // Recupera os favoritos salvos no localStorage
   useEffect(() => {
     if (!localStorage.getItem('favoriteRecipes')) {
       return;
     }
-
     if (JSON.parse(localStorage.getItem('favoriteRecipes'))
       ?.some((favoriteRecipe) => favoriteRecipe.id === id)) {
       setIsFavorited(true);
     }
   }, [id]);
-
   // Buscando os ingredientes, medidas e tipo de receitas ('meal' ou 'drink'). Salva nos estados
   useEffect(() => {
     if (pathname.includes('meals')) {
@@ -102,7 +98,6 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
     );
     setMeasureEntries(measures);
   }, [data, id, pathname]);
-
   // Lida com a variável 'inProgressRecipes' no localStorage
   useEffect(() => {
     const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -131,7 +126,6 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
       setIngredientsUsed(inProgressStorage[typeOfRecipe][id]);
     }
   }, [id, typeOfRecipe]);
-
   // Resgata o que tem salvo no localStorage de ingredientes salvos e deleta o id do localStorage se não houver nenhum ingrediente marcado
   useEffect(() => {
     const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -145,9 +139,33 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
       setDeleteItem(false);
     }
   }, [id, typeOfRecipe, ingredientsUsed, deleteItem]);
-
   // Varável que salva o resultado da pergunta: 'Todas os ingredientes da receita foram marcados?'
   const usedIngredientsValidation = ingredientsEntries.length === ingredientsUsed.length;
+  // Lida com o clique do botão "Finish Recipe"
+  const handleFinishButton = () => {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    const doneDate = new Date();
+    const objectToSetDoneRecipes = {
+      id: idMeal || idDrink,
+      type: idMeal ? 'meal' : 'drink',
+      nationality: strArea || '',
+      category: strCategory || '',
+      alcoholicOrNot: strAlcoholic || '',
+      name: strMeal || strDrink,
+      image: strDrinkThumb || strMealThumb,
+      doneDate: doneDate.toISOString(),
+      tags: strTags ? strTags.split(',') : [],
+    };
+    if (!doneRecipes) {
+      localStorage.setItem('doneRecipes', JSON.stringify([objectToSetDoneRecipes]));
+    } else {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([...doneRecipes, objectToSetDoneRecipes]),
+      );
+    }
+    history.push('/done-recipes');
+  };
 
   return (
     <div>
@@ -201,18 +219,15 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
         />
       ))}
       <p data-testid="instructions">{strInstructions}</p>
-      <Link
-        to="/"
+      <button
+        type="button"
+        className="finish-recipe-btn"
+        data-testid="finish-recipe-btn"
+        onClick={ handleFinishButton }
+        disabled={ !usedIngredientsValidation }
       >
-        <button
-          type="button"
-          className="finish-recipe-btn"
-          data-testid="finish-recipe-btn"
-          disabled={ !usedIngredientsValidation }
-        >
-          Finish Recipe
-        </button>
-      </Link>
+        Finish Recipe
+      </button>
     </div>
   );
 }
@@ -225,6 +240,9 @@ RecipeInProgress.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
