@@ -170,13 +170,13 @@ function RecipeInProgress({ match: { params: { id } }, location }) {
         <button
           type="button"
           onClick={ handleClickFavorite }
-          data-testid="favorite-btn"
         >
           <img
             src={ isFavorited
               ? blackHeartIcon
               : whiteHeartIcon }
             alt="favorite-icon"
+            data-testid="favorite-btn"
           />
         </button>
       </div>
