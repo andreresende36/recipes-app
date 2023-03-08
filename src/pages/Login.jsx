@@ -26,8 +26,8 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h3>email</h3>
+    <div className="bg-slate-600 w-[300px] p-[40px]">
+      <h3 className="decoration-slate-50">email</h3>
       <input
         type="text"
         name="email"
