@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import '../styles/tailWind.css';
 
 export default function Login() {
   const [disabled, setDisabled] = useState(true);
@@ -26,7 +27,7 @@ export default function Login() {
   };
 
   return (
-    <div className="bg-slate-600 w-[300px] p-[40px]">
+    <div className="bg-slate-600 w-[300px] p-[40px] ">
       <h3 className="decoration-slate-50">email</h3>
       <input
         type="text"
