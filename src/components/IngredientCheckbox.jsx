@@ -31,6 +31,7 @@ function IngredientCheckbox({
           value={ `${ingredientEntrie[1]} ${measureEntries[index][1]}` }
           checked={ isChecked }
           onChange={ handleCheck }
+          data-testid="checkbox"
         />
         {`Ingrediente ${index + 1}: `}
         {`${ingredientEntrie[1]} ${measureEntries[index][1]}`}

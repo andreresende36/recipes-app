@@ -5,6 +5,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { getMealDetails, getDrinkDetails } from '../services/apiServices';
 import IngredientCheckbox from '../components/IngredientCheckbox';
+import { handleClickFavorite } from '../helpers/handleClickFavorite';
 
 const copy = require('clipboard-copy');
 
@@ -32,51 +33,16 @@ function RecipeInProgress({ match: { params: { id } }, location, history }) {
     strInstructions = '',
     strTags = '',
   } = data;
-  // Função que lida com o clique no botão de favoritar
-  const handleClickFavorite = () => {
-    const objectToSet = {
-      id: idMeal || idDrink,
-      type: idMeal ? 'meal' : 'drink',
-      nationality: strArea || '',
-      category: strCategory || '',
-      alcoholicOrNot: strAlcoholic || '',
-      name: strMeal || strDrink,
-      image: strDrinkThumb || strMealThumb,
-    };
-    if (isFavorited) {
-      const filteredFavoriteRecipes = JSON.parse(
-        localStorage.getItem('favoriteRecipes'),
-      )
-        .filter((favoriteRecipe) => Number(favoriteRecipe.id)
-        !== Number(id));
-      if (filteredFavoriteRecipes.length === 0) {
-        localStorage.removeItem('favoriteRecipes');
-      } else {
-        localStorage.setItem('favoriteRecipes', JSON.stringify(filteredFavoriteRecipes));
-      }
-      setIsFavorited(false);
-    } else {
-      if (localStorage.getItem('favoriteRecipes')) {
-        localStorage.setItem(
-          'favoriteRecipes',
-          JSON.stringify(
-            [...JSON.parse(localStorage.getItem('favoriteRecipes')), objectToSet],
-          ),
-        );
-        setIsFavorited(true);
-        return;
-      }
-      localStorage.setItem('favoriteRecipes', JSON.stringify([objectToSet]));
-      setIsFavorited(true);
-    }
-  };
   // Recupera os favoritos salvos no localStorage
   useEffect(() => {
     if (!localStorage.getItem('favoriteRecipes')) {
       return;
     }
-    if (JSON.parse(localStorage.getItem('favoriteRecipes'))
-      ?.some((favoriteRecipe) => favoriteRecipe.id === id)) {
+    if (JSON.parse(
+      localStorage.getItem('favoriteRecipes'),
+    ).some(
+      (favoriteRecipe) => favoriteRecipe.id === id,
+    )) {
       setIsFavorited(true);
     }
   }, [id]);
@@ -187,7 +153,7 @@ function RecipeInProgress({ match: { params: { id } }, location, history }) {
         {isLinkCopied && <p>Link copied!</p>}
         <button
           type="button"
-          onClick={ handleClickFavorite }
+          onClick={ () => handleClickFavorite(data, id, isFavorited, setIsFavorited) }
         >
           <img
             src={ isFavorited
