@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../styles/login.css';
 import { ReactComponent as ReactLogo } from '../images/recipes_logo.svg';
+import tomate from '../images/tomate.png';
 // import '../styles/tailWind.css';
 
 export default function Login() {
@@ -29,39 +30,40 @@ export default function Login() {
   };
 
   return (
-    <div className="card-login">
-      <ReactLogo />
-      <img
-        alt="tomate"
-        className="tomate"
-      />
-      <h3 className="texto">email</h3>
-      <input
-        type="text"
-        name="email"
-        id=""
-        data-testid="email-input"
-        onChange={ handleCheckEmail }
-      />
-      <br />
-      <h3>password</h3>
-      <input
-        type="text"
-        name="password"
-        id=""
-        data-testid="password-input"
-        onChange={ handleCheckEmail }
-      />
-      <button
-        type="button"
-        name=""
-        id=""
-        data-testid="login-submit-btn"
-        disabled={ disabled }
-        onClick={ handleSubmitLogin }
-      >
-        Enter
-      </button>
+    <div className="fundo">
+      <div className="card-login">
+        <ReactLogo className="logo" />
+        <img src={ tomate } alt="" className="tomate" />
+        <div className="login-box">
+          <h3 className="texto">Login</h3>
+          <input
+            type="text"
+            name="email"
+            id=""
+            placeholder="email"
+            data-testid="email-input"
+            onChange={ handleCheckEmail }
+          />
+          <input
+            type="text"
+            name="password"
+            id=""
+            placeholder="senha"
+            data-testid="password-input"
+            onChange={ handleCheckEmail }
+          />
+          <button
+            type="button"
+            name=""
+            id=""
+            data-testid="login-submit-btn"
+            disabled={ disabled }
+            onClick={ handleSubmitLogin }
+          >
+            Enter
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
