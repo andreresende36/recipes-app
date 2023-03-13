@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import renderWithRouter from './helpers/renderWithRouter';
@@ -8,6 +8,7 @@ import RecipesProvider from '../context/RecipesProvider';
 import App from '../App';
 
 const doneRecipesRoute = '/done-recipes';
+const mealName = 'Spicy Arrabiata Penne';
 const doneRecipes = [
   {
     id: '52771',
@@ -119,7 +120,7 @@ describe('Testa as funções da tela de receitas concluídas.', () => {
     const filterByDrinkButton = screen.getByTestId('filter-by-drink-btn');
     const filterByAllButton = screen.getByTestId('filter-by-all-btn');
 
-    const mealTitle = screen.getByText('Spicy Arrabiata Penne');
+    const mealTitle = screen.getByText(mealName);
     const drinkTitle = screen.getByText('Aquamarine');
 
     userEvent.click(filterByMealButton);
@@ -135,6 +136,6 @@ describe('Testa as funções da tela de receitas concluídas.', () => {
     userEvent.click(filterByAllButton);
 
     expect(screen.getByText('Aquamarine')).toBeInTheDocument();
-    expect(screen.getByText('Spicy Arrabiata Penne')).toBeInTheDocument();
+    expect(screen.getByText(mealName)).toBeInTheDocument();
   });
 });
