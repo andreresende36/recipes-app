@@ -1,10 +1,10 @@
 .body{ 
-  font-family: sans-serif;
+  font-family: 'Epilogue';
 }
 .fundo {
   position: absolute;
   background: rgb(65, 25, 127);
-  height: 55%;
+  height: 400px;
   width:100%;
   z-index: -1;
 }
@@ -19,23 +19,27 @@
 
 .card-login {
   width: 100%;
+  margin: 0;
   display: grid;
-  grid-template-columns: [first] auto [line2] auto [line3] auto [col4-start];
+  padding: 0 0;
+  grid-template-columns: [line-start] auto [line-2] auto [line-3] auto [line-end];
   grid-template-rows: [row-start] 30% [row-1] 40% [row-2] auto [row-end];
 }
 
 .logo{
-  grid-column-start: 2;
-  grid-column-end: 3;
+  grid-column-start: line-start;
+  grid-column-end: line-end;
   grid-row-start: 1;
   grid-row-end: 2;
-  margin: 30px auto;
+  margin: 0 auto;
+  margin-top: 30px;
 }
 
 .login-box {
-  grid-row-start:3;
-  grid-column-start:2;
-  grid-column-end:4;
+  grid-row-start:row-2;
+  grid-row-end: row-end;
+  grid-column-start:line-start;
+  grid-column-end:line-end;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -47,6 +51,7 @@
   margin: 0 auto;
   padding-bottom: 3px;
   font-weight: lighter;
+  font-style: italic;
   font-size: 1.5rem;
 }
 
@@ -81,8 +86,11 @@
 }
 
 .tomate {
+  width: 400px;
   grid-row-start: 2;
-  grid-column-start: 2;
-  grid-column-end: 3;
+  grid-row-end:3;
+  grid-column-start: line-start;
+  grid-column-end: line-end;
   margin: 0 auto;
 }
+

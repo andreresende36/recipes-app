@@ -1,0 +1,42 @@
+.tela-profile{ 
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-info{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info>p{
+    text-justify: justify;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+}
+
+.logo {
+    width: 30%;
+    height: 30%;
+    margin: 0 auto;
+}
+
+.button-profile {
+    display:flex;
+    height: 3rem;
+    flex-direction: row;
+    margin: 0 auto;
+    border-bottom: 3 solid grey;
+}
+
+.button-profile>button{
+    width: 9rem;
+    height: 2rem;
+    background-color: white;;
+    border: white;
+}
+
