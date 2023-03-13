@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function RecipeCard({ recipe = {}, index, history }) {
+function RecipeCard({ recipe, index, history }) {
   const {
     strMealThumb = '',
     strDrinkThumb = '',
@@ -9,6 +9,7 @@ function RecipeCard({ recipe = {}, index, history }) {
     strDrink = '' } = recipe;
   return (
     <button
+      data-testid={ `${index}-recipe-button` }
       onClick={ () => history.push(
         recipe.idMeal ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}`,
       ) }
@@ -40,6 +41,8 @@ RecipeCard.propTypes = {
     strDrinkThumb: PropTypes.string,
     strMeal: PropTypes.string,
     strDrink: PropTypes.string,
+    idMeal: PropTypes.string,
+    idDrink: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,
   history: PropTypes.shape({

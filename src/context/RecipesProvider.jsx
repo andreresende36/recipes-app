@@ -16,11 +16,6 @@ function RecipesProvider({ children }) {
   const [mealsCategories, setMealsCategories] = useState([]);
   const [drinksCategories, setDrinksCategories] = useState([]);
 
-  // Deixei essa função aqui para ser implementada ainda. André Resende
-  const handleSearch = (newSearch) => {
-    setApiURL(newSearch);
-  };
-
   const data = useMemo(
     () => ({ apiURLMeals,
       apiURLDrinks,
@@ -29,8 +24,7 @@ function RecipesProvider({ children }) {
       mealsCategories,
       drinksCategories,
       setApiURLMeals,
-      setApiURLDrinks,
-      handleSearch }),
+      setApiURLDrinks }),
     [apiURLMeals,
       apiURLDrinks,
       meals,

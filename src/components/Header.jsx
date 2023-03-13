@@ -19,7 +19,11 @@ export default function Header(props) {
       <h1 data-testid="page-title">{ title }</h1>
       { profileIcon && (
         <button type="button" onClick={ () => history.push('/profile') }>
-          <img data-testid="profile-top-btn" src={ profileIconImg } alt="" />
+          <img
+            data-testid="profile-top-btn"
+            src={ profileIconImg }
+            alt="icone perfil"
+          />
         </button>
       ) }
       { searchingBarVisible && (
