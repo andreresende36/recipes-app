@@ -35,14 +35,12 @@ function RecipeInProgress({ match: { params: { id } }, location, history }) {
   } = data;
   // Recupera os favoritos salvos no localStorage
   useEffect(() => {
-    if (!localStorage.getItem('favoriteRecipes')) {
-      return;
-    }
-    if (JSON.parse(
+    const haveFavorites = localStorage.getItem('favoriteRecipes') ? JSON.parse(
       localStorage.getItem('favoriteRecipes'),
     ).some(
       (favoriteRecipe) => favoriteRecipe.id === id,
-    )) {
+    ) : false;
+    if (haveFavorites) {
       setIsFavorited(true);
     }
   }, [id]);
@@ -109,19 +107,21 @@ function RecipeInProgress({ match: { params: { id } }, location, history }) {
   const usedIngredientsValidation = ingredientsEntries.length === ingredientsUsed.length;
   // Lida com o clique do botão "Finish Recipe"
   const handleFinishButton = () => {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     const doneDate = new Date();
+    console.log(doneDate);
     const objectToSetDoneRecipes = {
       id: idMeal || idDrink,
       type: idMeal ? 'meal' : 'drink',
       nationality: strArea || '',
-      category: strCategory || '',
+      category: strCategory,
       alcoholicOrNot: strAlcoholic || '',
       name: strMeal || strDrink,
       image: strDrinkThumb || strMealThumb,
       doneDate: doneDate.toISOString(),
       tags: strTags ? strTags.split(',') : [],
     };
+    const doneRecipes = localStorage.getItem('doneRecipes')
+      ? JSON.parse(localStorage.getItem('doneRecipes')) : null;
     if (!doneRecipes) {
       localStorage.setItem('doneRecipes', JSON.stringify([objectToSetDoneRecipes]));
     } else {

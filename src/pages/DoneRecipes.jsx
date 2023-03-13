@@ -53,8 +53,8 @@ function DoneRecipes(props) {
           All
         </button>
       </div>
-      { recipes
-        ? recipes.map((recipe, index) => (
+      {
+        recipes?.map((recipe, index) => (
           <DoneRecipeCard
             key={ recipe.id }
             recipe={ recipe }
@@ -63,7 +63,7 @@ function DoneRecipes(props) {
             { ...props }
           />
         ))
-        : null }
+      }
       <Footer { ...props } />
     </div>
   );

@@ -50,7 +50,7 @@ function DoneRecipeCard({ recipe = {}, index, history }) {
         data-testid={ `${index}-horizontal-done-date` }
         className="category-name"
       >
-        { doneDate }
+        { `${doneDate}` }
       </span>
       <span
         data-testid={ `${index}-${[tags[0]]}-horizontal-tag` }
