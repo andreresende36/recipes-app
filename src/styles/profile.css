@@ -1,5 +1,6 @@
 .tela-profile{ 
     width:100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,6 +18,16 @@
     margin-top: 30px;
     margin-bottom: 30px;
     font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.user-info>h2{
+    text-justify: justify;
+    color: rgb(65, 25, 127);
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 2rem;
 }
 
 .logo {
@@ -27,10 +38,13 @@
 
 .button-profile {
     display:flex;
+    width: 80%;
     height: 3rem;
     flex-direction: row;
     margin: 0 auto;
-    border-bottom: 3 solid grey;
+    border-bottom: 1px solid grey;
+    margin-top: 1.2rem;
+    justify-content: center;
 }
 
 .button-profile>button{

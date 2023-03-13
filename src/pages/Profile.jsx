@@ -36,6 +36,7 @@ function Profile(props) {
       <div className="tela-profile">
         <div className="user-info">
           <ProfileLogo className="logo" />
+          <h2>PROFILE</h2>
           <p data-testid="profile-email" className="email">{email}</p>
         </div>
         <div className="button-profile">
@@ -45,7 +46,6 @@ function Profile(props) {
             onClick={ () => history.push('/done-recipes') }
           >
             Done Recipes
-
           </button>
         </div>
         <div className="button-profile">
