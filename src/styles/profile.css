@@ -53,4 +53,12 @@
     background-color: white;;
     border: white;
 }
+.button-profile:hover{
+    transform: scale(1.2);
+    border: 3px solid rgb(237, 238, 167); 
+}
+
+.button-profile>svg:hover{
+    filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
+}
 

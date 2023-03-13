@@ -6,6 +6,8 @@ import searchIconImg from '../images/searchIcon.svg';
 import HeaderContext from '../context/HeaderContext';
 import SearchBar from './SearchBar';
 
+import '../styles/header.css';
+
 export default function Header(props) {
   const [searchingBarVisible, setSearchingBarVisible] = useState(false);
 
