@@ -10,6 +10,10 @@ function Meals(props) {
   const numberOfCategoriesToShow = 5;
   return (
     <div className="meals-page">
+      <Header
+        headerType={ { title: 'Meals', profileIcon: true, searchIcon: true } }
+        { ...props }
+      />
       <div className="categories-buttons-container">
         {mealsCategories.slice(0, numberOfCategoriesToShow).map(({ strCategory }) => (
           <CategoryButton
@@ -20,10 +24,6 @@ function Meals(props) {
         ))}
         <button data-testid="All-category-filter" onClick={ () => setApiURLMeals('https://www.themealdb.com/api/json/v1/1/search.php?s=') }>Remove All Filters</button>
       </div>
-      <Header
-        headerType={ { title: 'Meals', profileIcon: true, searchIcon: true } }
-        { ...props }
-      />
       <Recipes recipes={ meals } { ...props } />
       <Footer { ...props } />
     </div>
