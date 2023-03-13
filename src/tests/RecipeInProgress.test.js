@@ -609,4 +609,20 @@ describe('Teste do componente RecipeInProgress.jsx', () => {
     const doneRecipes = JSON.parse(window.localStorage.getItem('doneRecipes'));
     expect(doneRecipes[1]).toMatchObject(doneMockRecipesDrinks[0]);
   });
+
+  it('Testa se ao faltar uma medida é renderizado apenas "" no lugar', async () => {
+    const { history } = renderWithRouter(
+      <HeaderProvider>
+        <App />
+      </HeaderProvider>,
+    );
+    act(() => {
+      history.push('/drinks/15997/in-progress');
+    });
+    await waitFor(() => {
+      expect(screen.getByTestId(FIRST_INGREDIENT)).toBeInTheDocument();
+    });
+    expect(screen.getByDisplayValue(/ginger ale/i).value).toBe('Ginger ale ');
+    expect(screen.getByTestId('2-ingredient-step').textContent).toBe('Ingrediente 3: Ice ');
+  });
 });

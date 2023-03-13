@@ -179,7 +179,8 @@ function RecipeInProgress({ match: { params: { id } }, location, history }) {
           setIngredientsUsed={ setIngredientsUsed }
           isChecked={
             ingredientsUsed.some((item) => item === `${
-              ingredientEntrie[1]} ${measureEntries[index][1]}`)
+              ingredientEntrie[1]} ${measureEntries[index]
+              ? measureEntries[index][1] : ''}`)
           }
           setDeleteItem={ setDeleteItem }
         />

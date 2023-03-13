@@ -44,11 +44,8 @@ export function RecipeDetails({ match, location, history }) {
   function getId(url) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const matchReg = url.match(regExp);
-    const number = 11;
 
-    return (matchReg && matchReg[2].length === number)
-      ? matchReg[2]
-      : null;
+    return matchReg[2];
   }
 
   useEffect(() => {

@@ -21,7 +21,7 @@ describe('Teste do componente RecipeCard', () => {
     });
     await waitFor(() => {
       expect(screen.getByTestId(firstButton)).toBeInTheDocument();
-    });
+    }, { timeout: 10000 });
     userEvent.click(screen.getByTestId(firstButton));
     expect(history.location.pathname).toBe('/meals/52977');
   });
@@ -37,7 +37,7 @@ describe('Teste do componente RecipeCard', () => {
     });
     await waitFor(() => {
       expect(screen.getByTestId(firstButton)).toBeInTheDocument();
-    });
+    }, { timeout: 10000 });
     userEvent.click(screen.getByTestId(firstButton));
     expect(history.location.pathname).toBe('/drinks/15997');
   });

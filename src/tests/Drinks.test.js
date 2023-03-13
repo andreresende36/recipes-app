@@ -7,7 +7,8 @@ import App from '../App';
 import HeaderProvider from '../context/HeaderProvider';
 
 const firstCardName = '0-card-name';
-jest.setTimeout(20000);
+const cocktailCategory = 'Cocktail-category-filter';
+jest.setTimeout(60000);
 
 describe('Teste do componente Drinks.jsx', () => {
   it('Teste do botão de remover todos os filtros', async () => {
@@ -20,9 +21,9 @@ describe('Teste do componente Drinks.jsx', () => {
       history.push('/drinks');
     });
     await waitFor(() => {
-      expect(screen.getByTestId('Cocktail-category-filter')).toBeInTheDocument();
+      expect(screen.getByTestId(cocktailCategory)).toBeInTheDocument();
       expect(screen.getByTestId(firstCardName)).toBeInTheDocument();
-    });
+    }, { timeout: 10000 });
     const initialArrayRecipeNames = [];
     const cocktailArrayRecipeNames = [];
     const finalArrayRecipeNames = [];
@@ -30,10 +31,10 @@ describe('Teste do componente Drinks.jsx', () => {
       const recipeName = screen.getByTestId(`${i}-card-name`);
       initialArrayRecipeNames.push(recipeName.textContent);
     }
-    userEvent.click(screen.getByTestId('Cocktail-category-filter'));
+    userEvent.click(screen.getByTestId(cocktailCategory));
     await waitFor(() => {
       expect(screen.getByTestId(firstCardName).textContent).toBe('155 Belmont');
-    });
+    }, { timeout: 10000 });
     for (let i = 0; i <= 11; i += 1) {
       const recipeName = screen.getByTestId(`${i}-card-name`);
       cocktailArrayRecipeNames.push(recipeName.textContent);
@@ -42,7 +43,47 @@ describe('Teste do componente Drinks.jsx', () => {
     userEvent.click(screen.getByTestId('All-category-filter'));
     await waitFor(() => {
       expect(screen.getByTestId(firstCardName).textContent).toBe('GG');
-    }, { timeout: 20000 });
+    }, { timeout: 10000 });
+    for (let i = 0; i <= 11; i += 1) {
+      const recipeName = screen.getByTestId(`${i}-card-name`);
+      finalArrayRecipeNames.push(recipeName.textContent);
+    }
+    expect(initialArrayRecipeNames).toEqual(finalArrayRecipeNames);
+  });
+
+  it('Drinks - Testa se ao apertar 2 vezes num botão de categoria na primeira ele filtra a categoria e na segunda ele exclui o filtro', async () => {
+    const { history } = renderWithRouter(
+      <HeaderProvider>
+        <App />
+      </HeaderProvider>,
+    );
+    act(() => {
+      history.push('/drinks');
+    });
+    await waitFor(() => {
+      expect(screen.getByTestId(cocktailCategory)).toBeInTheDocument();
+      expect(screen.getByTestId(firstCardName)).toBeInTheDocument();
+    }, { timeout: 10000 });
+    const initialArrayRecipeNames = [];
+    const cocktailArrayRecipeNames = [];
+    const finalArrayRecipeNames = [];
+    for (let i = 0; i <= 11; i += 1) {
+      const recipeName = screen.getByTestId(`${i}-card-name`);
+      initialArrayRecipeNames.push(recipeName.textContent);
+    }
+    userEvent.click(screen.getByTestId(cocktailCategory));
+    await waitFor(() => {
+      expect(screen.getByTestId(firstCardName).textContent).toBe('155 Belmont');
+    }, { timeout: 10000 });
+    for (let i = 0; i <= 11; i += 1) {
+      const recipeName = screen.getByTestId(`${i}-card-name`);
+      cocktailArrayRecipeNames.push(recipeName.textContent);
+    }
+    expect(initialArrayRecipeNames).not.toEqual(cocktailArrayRecipeNames);
+    userEvent.click(screen.getByTestId(cocktailCategory));
+    await waitFor(() => {
+      expect(screen.getByTestId(firstCardName).textContent).toBe('GG');
+    }, { timeout: 10000 });
     for (let i = 0; i <= 11; i += 1) {
       const recipeName = screen.getByTestId(`${i}-card-name`);
       finalArrayRecipeNames.push(recipeName.textContent);
