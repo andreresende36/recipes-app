@@ -7,6 +7,7 @@ import HeaderContext from '../context/HeaderContext';
 import SearchBar from './SearchBar';
 
 import { ReactComponent as RecipeLogoHeader } from '../images/RecipeHeaderLogo.svg';
+import { ReactComponent as TextRecipe } from '../images/textRecipeApp.svg';
 import '../styles/header.css';
 
 export default function Header(props) {
@@ -20,35 +21,48 @@ export default function Header(props) {
   return (
     <div className="background-upper-bar">
       <div className="upper-header">
-        <RecipeLogoHeader />
+        <span>
+          <RecipeLogoHeader />
+          <TextRecipe style={ { paddingLeft: '9px' } } />
+        </span>
         <div className="profile-header">
           { profileIcon && (
             <button type="button" onClick={ () => history.push('/profile') }>
-              <img data-testid="profile-top-btn" src={ profileIconImg } alt="" className='header-profile'/>
+              <img
+                data-testid="profile-top-btn"
+                src={ profileIconImg }
+                alt=""
+                className="profile-logo"
+              />
             </button>
           ) }
         </div>
       </div>
-      <h1 data-testid="page-title">{ title }</h1>
-      { searchingBarVisible && (
-        <input
-          type="text"
-          value={ search }
-          onChange={ ({ target }) => setSearch(target.value) }
-          data-testid="search-input"
-        />
-      )}
-      { searchingBarVisible && (
-        <SearchBar title={ title } { ...props } />
-      )}
-      { searchIcon && (
-        <button
-          type="button"
-          onClick={ () => setSearchingBarVisible(!searchingBarVisible) }
-        >
-          <img data-testid="search-top-btn" src={ searchIconImg } alt="" />
-        </button>
-      )}
+      <div className="container-page-title">
+        <h1 data-testid="page-title">{ title }</h1>
+        { searchingBarVisible && (
+          <input
+            type="text"
+            value={ search }
+            onChange={ ({ target }) => setSearch(target.value) }
+            data-testid="search-input"
+            className="page-title"
+          />
+        )}
+      </div>
+      <div className="container-search">
+        { searchingBarVisible && (
+          <SearchBar title={ title } { ...props } />
+        )}
+        { searchIcon && (
+          <button
+            type="button"
+            onClick={ () => setSearchingBarVisible(!searchingBarVisible) }
+          >
+            <img data-testid="search-top-btn" src={ searchIconImg } alt="" />
+          </button>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,12 @@
 :root{
     --yellow-header: #FCDC36;
-    --purple: rgb(65, 25, 127);
+    --purple: #41197f;
+    --yellow-filter: invert(86%) sepia(99%) saturate(517%) hue-rotate(330deg) brightness(102%) contrast(98%);
+    --purple-filter: invert(17%) sepia(16%) saturate(6594%) hue-rotate(244deg) brightness(101%) contrast(114%);
+}
+.background-upper-bar {
+    display: flex;
+    flex-direction: column;
 }
 
 .upper-header{
@@ -9,26 +15,34 @@
     background-color: var(--yellow-header);
     display: flex;
     flex: row;
+    justify-content: space-between;
 }
 
-.upper-header>*{
-    margin: auto;
+.upper-header>span{
+    margin: auto 20px;
 }
 
 .profile-header>button{
     background-color: var(--yellow-header);
     border:0 solid var(--yellow-header);
     color:var(--purple);
-}
-
-.header-profile{
-    width: 40px;
-    padding: 4px;
+    margin: 10px;
     border: 4px solid var(--purple);
     border-radius: 50%;
+}
+
+.profile-logo{
+    width: 25px;
+    padding: 4px;
+    padding:auto;
+    filter: var(--purple-filter);
 }
 
 .logo-header>img{
     color: black;
     background-color: var(--yellow-header);
+}
+
+.container-page-title{
+
 }
