@@ -46,11 +46,6 @@ function FavoriteRecipes(props) {
               ? `/meals/${recipe.id}` : `/drinks/${recipe.id}` }
           >
             <h2 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h2>
-          </Link>
-          <Link
-            to={ recipe.type === 'meal'
-              ? `/meals/${recipe.id}` : `/drinks/${recipe.id}` }
-          >
             <img
               data-testid={ `${index}-horizontal-image` }
               src={ recipe.image }
