@@ -20,7 +20,7 @@ function FavoriteRecipes(props) {
       return doneRecipes;
     };
     setRecipes(recipesFunc);
-  }, []);
+  }, []); //
 
   // console.log(recipes);
 
