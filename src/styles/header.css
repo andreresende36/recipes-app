@@ -1,0 +1,34 @@
+:root{
+    --yellow-header: #FCDC36;
+    --purple: rgb(65, 25, 127);
+}
+
+.upper-header{
+    width: 100%;
+    height: 4rem;
+    background-color: var(--yellow-header);
+    display: flex;
+    flex: row;
+}
+
+.upper-header>*{
+    margin: auto;
+}
+
+.profile-header>button{
+    background-color: var(--yellow-header);
+    border:0 solid var(--yellow-header);
+    color:var(--purple);
+}
+
+.header-profile{
+    width: 40px;
+    padding: 4px;
+    border: 4px solid var(--purple);
+    border-radius: 50%;
+}
+
+.logo-header>img{
+    color: black;
+    background-color: var(--yellow-header);
+}

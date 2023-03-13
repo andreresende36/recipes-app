@@ -6,6 +6,7 @@ import searchIconImg from '../images/searchIcon.svg';
 import HeaderContext from '../context/HeaderContext';
 import SearchBar from './SearchBar';
 
+import { ReactComponent as RecipeLogoHeader } from '../images/RecipeHeaderLogo.svg';
 import '../styles/header.css';
 
 export default function Header(props) {
@@ -17,13 +18,18 @@ export default function Header(props) {
   const { history } = props;
 
   return (
-    <div>
+    <div className="background-upper-bar">
+      <div className="upper-header">
+        <RecipeLogoHeader />
+        <div className="profile-header">
+          { profileIcon && (
+            <button type="button" onClick={ () => history.push('/profile') }>
+              <img data-testid="profile-top-btn" src={ profileIconImg } alt="" className='header-profile'/>
+            </button>
+          ) }
+        </div>
+      </div>
       <h1 data-testid="page-title">{ title }</h1>
-      { profileIcon && (
-        <button type="button" onClick={ () => history.push('/profile') }>
-          <img data-testid="profile-top-btn" src={ profileIconImg } alt="" />
-        </button>
-      ) }
       { searchingBarVisible && (
         <input
           type="text"
