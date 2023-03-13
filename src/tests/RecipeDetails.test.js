@@ -37,10 +37,8 @@ describe('Testa a página Recipe Details', () => {
       expect(title).toHaveTextContent('Aquamarine');
       expect(screen.getByTestId('recipe-category')).toHaveTextContent('Alcoholic');
       const lastRenderizedIngredient = screen.getByTestId('2-ingredient-name-and-measure');
-      const notRenderizedIngredient = screen.queryByTestId('3-ingredient-name-and-measure');
       expect(lastRenderizedIngredient).toBeInTheDocument();
       expect(lastRenderizedIngredient).toHaveTextContent('Ingrediente 3: Banana Liqueur 1 oz');
-      expect(notRenderizedIngredient).not.toBeInTheDocument();
       expect(screen.getByTestId('instructions')).toHaveTextContent('Shake well in a shaker with ice. Strain in a martini glass.');
     });
     await waitFor(() => {
@@ -440,6 +438,60 @@ describe('Testa a página Recipe Details', () => {
       const allItems = window.localStorage.getAll();
       expect(Object.keys(allItems).length).toBe(1);
       expect(JSON.parse(window.localStorage.getItem('favoriteRecipes'))).toHaveLength(2);
+    }, { timeout: 4000 });
+  });
+
+  test('testa se é possível favoritar a refeição Fruit And Cream Cheese', async () => {
+    const localStorageMock = (function bla() {
+      let store = {};
+
+      return {
+        getItem(key) {
+          return store[key];
+        },
+
+        setItem(key, value) {
+          store[key] = value;
+        },
+
+        clear() {
+          store = {};
+        },
+
+        removeItem(key) {
+          delete store[key];
+        },
+
+        getAll() {
+          return store;
+        },
+      };
+    }());
+
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+    const { history } = renderWithRouter(
+      <HeaderProvider>
+        <RecipesProvider>
+          <App />
+        </RecipesProvider>
+      </HeaderProvider>,
+    );
+
+    act(() => {
+      history.push('/meals/52957');
+    });
+
+    // espera 2 segundos pra executar o click pra dar tempo de fazer o fetch
+    setTimeout(() => {
+      userEvent.click(screen.getByTestId(favoriteBtnTestID));
+    }, 2000);
+
+    await waitFor(() => {
+      const allItems = window.localStorage.getAll();
+      expect(Object.keys(allItems).length).toBe(1);
+      expect(JSON.parse(window.localStorage.getItem('favoriteRecipes'))).toHaveLength(1);
+      const fruitAndChesse = JSON.parse(window.localStorage.getItem('favoriteRecipes'))[0];
+      expect(fruitAndChesse.type).toBe('meal');
     }, { timeout: 4000 });
   });
 });

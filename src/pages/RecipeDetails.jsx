@@ -6,6 +6,7 @@ import '../styles/recipeDetails.css';
 import shareSvg from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { handleClickFavorite } from '../helpers/handleClickFavorite';
 
 const copy = require('clipboard-copy');
 
@@ -43,11 +44,8 @@ export function RecipeDetails({ match, location, history }) {
   function getId(url) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const matchReg = url.match(regExp);
-    const number = 11;
 
-    return (matchReg && matchReg[2].length === number)
-      ? matchReg[2]
-      : null;
+    return matchReg[2];
   }
 
   useEffect(() => {
@@ -77,44 +75,6 @@ export function RecipeDetails({ match, location, history }) {
       .then((response) => setRecommendations(response));
   }, [location.pathname, match.params]);
 
-  const handleClickFavorite = () => {
-    const objectToSet = {
-      id: data.idMeal || data.idDrink,
-      type: data.idMeal ? 'meal' : 'drink',
-      nationality: data.strArea || '',
-      category: data.strCategory || '',
-      alcoholicOrNot: data.strAlcoholic || '',
-      name: data.strMeal || data.strDrink,
-      image: data.strDrinkThumb || data.strMealThumb,
-    };
-    if (isFavorited) {
-      const filteredFavoriteRecipes = JSON.parse(
-        localStorage.getItem('favoriteRecipes'),
-      )
-        .filter((favoriteRecipe) => Number(favoriteRecipe.id)
-        !== Number(match.params.id));
-      if (filteredFavoriteRecipes.length === 0) {
-        localStorage.removeItem('favoriteRecipes');
-      } else {
-        localStorage.setItem('favoriteRecipes', JSON.stringify(filteredFavoriteRecipes));
-      }
-      setIsFavorited(false);
-    } else {
-      if (localStorage.getItem('favoriteRecipes')) {
-        localStorage.setItem(
-          'favoriteRecipes',
-          JSON.stringify(
-            [...JSON.parse(localStorage.getItem('favoriteRecipes')), objectToSet],
-          ),
-        );
-        setIsFavorited(true);
-        return;
-      }
-      localStorage.setItem('favoriteRecipes', JSON.stringify([objectToSet]));
-      setIsFavorited(true);
-    }
-  };
-
   const mealsOrDrinks = location.pathname.includes('meals') ? 'meals' : 'drinks';
   const inProgressRecipes = localStorage.getItem('inProgressRecipes')
     ? JSON.parse(localStorage.getItem('inProgressRecipes'))[mealsOrDrinks] : null;
@@ -129,8 +89,15 @@ export function RecipeDetails({ match, location, history }) {
           data-testid="recipe-photo"
           src={ data.strMealThumb || data.strDrinkThumb }
           alt=""
+          className="recipe-photo"
         />
-        <h3 data-testid="recipe-title">{data.strMeal || data.strDrink}</h3>
+        <div className="overlay"> </div>
+        <h3
+          data-testid="recipe-title"
+          className="recipe-title"
+        >
+          {data.strMeal || data.strDrink}
+        </h3>
         <p data-testid="recipe-category">
           {location.pathname.includes('meals') ? data.strCategory : data.strAlcoholic}
         </p>
@@ -189,7 +156,9 @@ export function RecipeDetails({ match, location, history }) {
       </button>
       {isLinkCopied && <p>Link copied!</p>}
       <button
-        onClick={ handleClickFavorite }
+        onClick={
+          () => handleClickFavorite(data, match.params.id, isFavorited, setIsFavorited)
+        }
       >
         <img
           src={
