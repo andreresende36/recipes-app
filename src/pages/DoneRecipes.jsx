@@ -9,10 +9,10 @@ function DoneRecipes(props) {
   const [recipes, setRecipes] = useState([]);
 
   const getDoneRecipes = () => {
-    const recipeList = JSON.parse(localStorage.getItem('doneRecipes'));
+    const recipeList = localStorage.getItem('doneRecipes');
 
-    setReceivedRecipes(recipeList);
-    setRecipes(recipeList);
+    setReceivedRecipes(JSON.parse(recipeList));
+    setRecipes(JSON.parse(recipeList));
   };
 
   useEffect(getDoneRecipes, []);
@@ -27,7 +27,7 @@ function DoneRecipes(props) {
   return (
     <div>
       <Header
-        headerType={ { title: 'Done Recipes', profileIcon: true, searchIcon: true } }
+        headerType={ { title: 'Done Recipes', profileIcon: true, searchIcon: false } }
         { ...props }
       />
       <div className="filters-container">
@@ -53,7 +53,7 @@ function DoneRecipes(props) {
           All
         </button>
       </div>
-      { recipes.map((recipe, index) => (
+      { recipes?.map((recipe, index) => (
         <DoneRecipeCard
           key={ recipe.id }
           recipe={ recipe }
