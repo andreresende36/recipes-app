@@ -25,14 +25,23 @@ export default function Header(props) {
           <RecipeLogoHeader />
           <TextRecipe style={ { paddingLeft: '9px' } } />
         </span>
-        <div className="profile-header">
+        <div className="header-header">
+          { searchIcon && (
+            <button
+              type="button"
+              onClick={ () => setSearchingBarVisible(!searchingBarVisible) }
+              className="lupa"
+            >
+              <img data-testid="search-top-btn" src={ searchIconImg } alt="" />
+            </button>
+          )}
           { profileIcon && (
-            <button type="button" onClick={ () => history.push('/profile') }>
+            <button type="button" className='button-logo' onClick={ () => history.push('/profile') }>
               <img
                 data-testid="profile-top-btn"
                 src={ profileIconImg }
                 alt=""
-                className="profile-logo"
+                className="header-logo"
               />
             </button>
           ) }
@@ -40,27 +49,20 @@ export default function Header(props) {
       </div>
       <div className="container-page-title">
         <h1 data-testid="page-title">{ title }</h1>
+      </div>
+      <div className="container-search">
         { searchingBarVisible && (
           <input
             type="text"
             value={ search }
             onChange={ ({ target }) => setSearch(target.value) }
             data-testid="search-input"
-            className="page-title"
+            className="search-input-text"
+            placeholder='Search'
           />
         )}
-      </div>
-      <div className="container-search">
         { searchingBarVisible && (
           <SearchBar title={ title } { ...props } />
-        )}
-        { searchIcon && (
-          <button
-            type="button"
-            onClick={ () => setSearchingBarVisible(!searchingBarVisible) }
-          >
-            <img data-testid="search-top-btn" src={ searchIconImg } alt="" />
-          </button>
         )}
       </div>
     </div>

@@ -35,8 +35,7 @@ function Profile(props) {
       />
       <div className="tela-profile">
         <div className="user-info">
-          <ProfileLogo className="logo" />
-          <h2>PROFILE</h2>
+          <ProfileLogo className="profile-logo" />
           <p data-testid="profile-email" className="email">{email}</p>
         </div>
         <div className="button-profile">

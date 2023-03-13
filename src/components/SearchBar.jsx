@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
+import '../styles/header.css';
 
 function SearchBar(props) {
   // apiURL vai ser passado pro provider pra usar na listagem de produtos, mas como n foi criado ainda deixei aqui
@@ -69,37 +70,41 @@ function SearchBar(props) {
   }, [props]);
 
   return (
-    <div>
-      <input
-        type="radio"
-        name="searchType"
-        id="search-ingredient"
-        data-testid="ingredient-search-radio"
-        value="ingredient"
-        onChange={ () => setSearchType('ingredient') }
-      />
-      <input
-        type="radio"
-        name="searchType"
-        id="search-name"
-        data-testid="name-search-radio"
-        value="name"
-        onChange={ () => setSearchType('name') }
-      />
-      <input
-        type="radio"
-        name="searchType"
-        id="search-firstLetter"
-        data-testid="first-letter-search-radio"
-        value="firstLetter"
-        onChange={ () => setSearchType('firstLetter') }
-      />
+    <div className="search-bar-results">
+      <span className="search-radios">
+        <input
+          type="radio"
+          name="searchType"
+          id="search-ingredient"
+          data-testid="ingredient-search-radio"
+          value="ingredient"
+          onChange={ () => setSearchType('ingredient') }
+        />
+        <p>ingredient</p>
+        <input
+          type="radio"
+          name="searchType"
+          id="search-name"
+          data-testid="name-search-radio"
+          value="name"
+          onChange={ () => setSearchType('name') }
+        />
+        <p>name</p>
+        <input
+          type="radio"
+          name="searchType"
+          id="search-firstLetter"
+          data-testid="first-letter-search-radio"
+          value="firstLetter"
+          onChange={ () => setSearchType('firstLetter') }
+        />
+        <p>firstletter</p>
+      </span>
       <button
         data-testid="exec-search-btn"
         onClick={ handleClickSearch }
       >
         Pesquisar
-
       </button>
     </div>
   );
