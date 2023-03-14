@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 function RecommendationCard({ index, title, src }) {
   return (
     <div data-testid={ `${index}-recommendation-card` } className="recommendation-card">
-      <h3 data-testid={ `${index}-recommendation-title` }>{title}</h3>
       <img src={ src } alt={ title } className="recommendation-image" />
+      <h3 data-testid={ `${index}-recommendation-title` }>{title}</h3>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { getMealDetails, getDrinkDetails } from '../services/apiServices';
 import IngredientCheckbox from '../components/IngredientCheckbox';
 import { handleClickFavorite } from '../helpers/handleClickFavorite';
+import '../styles/recipeDetails.css';
 
 const copy = require('clipboard-copy');
 
@@ -133,15 +134,24 @@ function RecipeInProgress({ match: { params: { id } }, location, history }) {
     history.push('/done-recipes');
   };
 
+  function getId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const matchReg = url.match(regExp);
+
+    return matchReg[2];
+  }
+
   return (
     <div>
       <img
         data-testid="recipe-photo"
         src={ strMealThumb || strDrinkThumb }
         alt={ `${strMeal || strDrink}` }
+        className="recipe-photo"
       />
       <div>
         <button
+          className="share-btn"
           data-testid="share-btn"
           onClick={ () => {
             copy(`http://localhost:3000${pathname.replace('/in-progress', '')}`);
@@ -150,9 +160,10 @@ function RecipeInProgress({ match: { params: { id } }, location, history }) {
         >
           <img src={ shareSvg } alt="share-icon" />
         </button>
-        {isLinkCopied && <p>Link copied!</p>}
+        {isLinkCopied && <p className="link-copied">Link copied!</p>}
         <button
           type="button"
+          className="favorite-btn"
           onClick={ () => handleClickFavorite(data, id, isFavorited, setIsFavorited) }
         >
           <img
@@ -164,37 +175,54 @@ function RecipeInProgress({ match: { params: { id } }, location, history }) {
           />
         </button>
       </div>
-      <h3 data-testid="recipe-title">{ strMeal || strDrink }</h3>
-      <p data-testid="recipe-category">
+      <h3 data-testid="recipe-title" className="recipe-title">{ strMeal || strDrink }</h3>
+      <p data-testid="recipe-category" className="recipe-category">
         {strCategory}
       </p>
-      {ingredientsEntries.map((ingredientEntrie, index) => (
-        <IngredientCheckbox
-          key={ `ingredient-${index}` }
-          ingredientEntrie={ ingredientEntrie }
-          measureEntries={ measureEntries }
-          index={ index }
-          recipeId={ id }
-          ingredientsUsed={ ingredientsUsed }
-          setIngredientsUsed={ setIngredientsUsed }
-          isChecked={
-            ingredientsUsed.some((item) => item === `${
-              ingredientEntrie[1]} ${measureEntries[index]
-              ? measureEntries[index][1] : ''}`)
-          }
-          setDeleteItem={ setDeleteItem }
-        />
-      ))}
-      <p data-testid="instructions">{strInstructions}</p>
-      <button
-        type="button"
-        className="finish-recipe-btn"
-        data-testid="finish-recipe-btn"
-        onClick={ handleFinishButton }
-        disabled={ !usedIngredientsValidation }
-      >
-        Finish Recipe
-      </button>
+      <div className="container-recipe-details">
+        <h2>Ingredients</h2>
+        <ul className="ingredients-container">
+          {ingredientsEntries.map((ingredientEntrie, index) => (
+            <IngredientCheckbox
+              key={ `ingredient-${index}` }
+              ingredientEntrie={ ingredientEntrie }
+              measureEntries={ measureEntries }
+              index={ index }
+              recipeId={ id }
+              ingredientsUsed={ ingredientsUsed }
+              setIngredientsUsed={ setIngredientsUsed }
+              isChecked={
+                ingredientsUsed.some((item) => item === `${
+                  ingredientEntrie[1]} ${measureEntries[index]
+                  ? measureEntries[index][1] : ''}`)
+              }
+              setDeleteItem={ setDeleteItem }
+            />
+          ))}
+        </ul>
+        <h2>Instructions</h2>
+        <p data-testid="instructions" className="instructions">{strInstructions}</p>
+        <h2>Video</h2>
+        {data.strYoutube && <iframe
+          width="853"
+          height="480"
+          src={ `https://www.youtube.com/embed/${getId(data.strYoutube)}` }
+          title="Embedded youtube"
+          data-testid="video"
+          className="recipe-video"
+        />}
+        <div className="button-container">
+          <button
+            type="button"
+            className="finish-recipe-btn"
+            data-testid="finish-recipe-btn"
+            onClick={ handleFinishButton }
+            disabled={ !usedIngredientsValidation }
+          >
+            Finish Recipe
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

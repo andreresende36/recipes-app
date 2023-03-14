@@ -1,20 +1,19 @@
 .body{ 
-  font-family: 'Epilogue';
-  width: 100%;
+  font-family: sans-serif;
 }
 
 .fundo {
-  position: absolute;
   background: rgb(65, 25, 127);
-  height: 60%;
+  height: 50%;
   width:100%;
+  position: absolute;
   z-index: -1;
 }
 
 .fundo::before {
-  background: rgb(255, 255, 255);
-  width:100%;
-  height:100%;
+  background: white;
+  height: 100%;
+  width: 100%;
   z-index: 2;
 }
 
@@ -26,6 +25,7 @@
   padding: 0 0;
   grid-template-columns: [line-start] auto [line-2] auto [line-3] auto [line-end];
   grid-template-rows: [row-start] 30% [row-1] 40% [row-2] auto [row-end];
+  width: 100%;
 }
 
 .logo{
@@ -47,13 +47,14 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   width: 80%;
 }
 
-.login-box > h3{
+.login-box > h3 {
   color: rgb(65, 25, 127);
   margin: 0 auto;
-  padding-bottom: 3px;
+  padding-bottom: 10px;
   font-weight: lighter;
   font-style: italic;
   font-size: 1.5rem;
@@ -77,10 +78,9 @@
   border: #FCC436;
 }
 .login-box > button:hover {
-  transform:scale(1.01,1.01);
-    -webkit-transform:scale(1.03,1.03);
-    -moz-transform:scale(1.03,1.03);
-
+  transform: scale(1.01, 1.01);
+  -moz-transform: scale(1.03, 1.03);
+  -webkit-transform: scale(1.03, 1.03);
   background-color: #ffbb0f;
 }
 

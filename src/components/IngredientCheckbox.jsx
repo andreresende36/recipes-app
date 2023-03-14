@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../styles/recipeDetails.css';
 
 function IngredientCheckbox({
   ingredientEntrie,
@@ -21,7 +22,7 @@ function IngredientCheckbox({
     }
   };
   return (
-    <div>
+    <div className="ingredients-checkbox-row">
       <label
         data-testid={ `${index}-ingredient-step` }
         className={ isChecked ? 'checked' : '' }
@@ -33,6 +34,7 @@ function IngredientCheckbox({
           checked={ isChecked }
           onChange={ handleCheck }
           data-testid="checkbox"
+          className="checkbox"
         />
         {`Ingrediente ${index + 1}: `}
         {`${ingredientEntrie[1]} ${measureEntries[index]

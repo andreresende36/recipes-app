@@ -89,79 +89,106 @@ export function RecipeDetails({ match, location, history }) {
           data-testid="recipe-photo"
           src={ data.strMealThumb || data.strDrinkThumb }
           alt=""
+          className="recipe-photo"
         />
-        <h3 data-testid="recipe-title">{data.strMeal || data.strDrink}</h3>
-        <p data-testid="recipe-category">
+        <div className="overlay"> </div>
+        <h3
+          data-testid="recipe-title"
+          className="recipe-title"
+        >
+          {data.strMeal || data.strDrink}
+        </h3>
+        <button
+          data-testid="share-btn"
+          onClick={ () => {
+            copy(`http://localhost:3000${location.pathname}`);
+            setIsLinkCopied(true);
+          } }
+          className="share-btn"
+        >
+          <img src={ shareSvg } alt="share-icon" />
+        </button>
+        {isLinkCopied && <p className="link-copied">Link copied!</p>}
+        <button
+          onClick={
+            () => handleClickFavorite(data, match.params.id, isFavorited, setIsFavorited)
+          }
+          className="favorite-btn"
+        >
+          <img
+            src={
+              isFavorited
+                ? blackHeartIcon : whiteHeartIcon
+            }
+            alt="favorite-icon"
+            data-testid="favorite-btn"
+          />
+        </button>
+        <p data-testid="recipe-category" className="recipe-category">
           {location.pathname.includes('meals') ? data.strCategory : data.strAlcoholic}
         </p>
-        {ingredientsEntries.map((ingredientEntrie, index) => (
+        <div className="container-recipe-details">
+          <h2>Ingredients</h2>
+          <ul className="ingredients-container">
+            {ingredientsEntries.map((ingredientEntrie, index) => (
+              <li
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                key={ ingredientEntrie[0] }
+              >
+                {`Ingrediente ${index + 1}: `}
+                {ingredientEntrie[1]}
+                {' '}
+                {measureEntries[index] ? measureEntries[index][1] : ''}
+              </li>
+            ))}
+          </ul>
+          <h2>Intructions</h2>
           <p
-            data-testid={ `${index}-ingredient-name-and-measure` }
-            key={ ingredientEntrie[0] }
+            data-testid="instructions"
+            className="instructions"
           >
-            {`Ingrediente ${index + 1}: `}
-            {ingredientEntrie[1]}
-            {' '}
-            {measureEntries[index] ? measureEntries[index][1] : ''}
+            {data.strInstructions}
           </p>
-        ))}
-        <p data-testid="instructions">{data.strInstructions}</p>
-        {data.strYoutube && <iframe
-          width="853"
-          height="480"
-          src={ `https://www.youtube.com/embed/${getId(data.strYoutube)}` }
-          title="Embedded youtube"
-          data-testid="video"
-        />}
-        <div className="carousel">
-          {recommendations.map((recommendation, index) => (
-            <RecommendationCard
-              key={ recommendation.idMeal || recommendation.idDrink }
-              title={ recommendation.strMeal || recommendation.strDrink }
-              index={ index }
-              src={ recommendation.strMealThumb || recommendation.strDrinkThumb }
-            />
-          ))}
+          <h2>Video</h2>
+          {data.strYoutube && <iframe
+            width="853"
+            height="480"
+            src={ `https://www.youtube.com/embed/${getId(data.strYoutube)}` }
+            title="Embedded youtube"
+            data-testid="video"
+            className="recipe-video"
+          />}
+          <h2>Recommended</h2>
+          <div className="carousel">
+            {recommendations.map((recommendation, index) => (
+              <RecommendationCard
+                key={ recommendation.idMeal || recommendation.idDrink }
+                title={ recommendation.strMeal || recommendation.strDrink }
+                index={ index }
+                src={ recommendation.strMealThumb || recommendation.strDrinkThumb }
+              />
+            ))}
+          </div>
+        </div>
+        <div className="button-container">
+          {doneRecipes
+            ?.some((doneRecipe) => Number(doneRecipe.id) === Number(match.params.id))
+            ? ''
+            : (
+              <button
+                data-testid="start-recipe-btn"
+                className="start-recipe-btn"
+                onClick={
+                  () => history.push(`/${mealsOrDrinks}/${match.params.id}/in-progress`)
+                }
+              >
+                {idsInProgressRecipes
+                  ?.some((idsInProgressRecipe) => idsInProgressRecipe === match.params.id)
+                  ? 'Continue Recipe' : 'Start Recipe'}
+              </button>
+            ) }
         </div>
       </div>
-      {doneRecipes
-        ?.some((doneRecipe) => Number(doneRecipe.id) === Number(match.params.id)) ? '' : (
-          <button
-            data-testid="start-recipe-btn"
-            className="start-recipe-btn"
-            onClick={
-              () => history.push(`/${mealsOrDrinks}/${match.params.id}/in-progress`)
-            }
-          >
-            {idsInProgressRecipes
-              ?.some((idsInProgressRecipe) => idsInProgressRecipe === match.params.id)
-              ? 'Continue Recipe' : 'Start Recipe'}
-          </button>
-        ) }
-      <button
-        data-testid="share-btn"
-        onClick={ () => {
-          copy(`http://localhost:3000${location.pathname}`);
-          setIsLinkCopied(true);
-        } }
-      >
-        <img src={ shareSvg } alt="share-icon" />
-      </button>
-      {isLinkCopied && <p>Link copied!</p>}
-      <button
-        onClick={
-          () => handleClickFavorite(data, match.params.id, isFavorited, setIsFavorited)
-        }
-      >
-        <img
-          src={
-            isFavorited
-              ? blackHeartIcon : whiteHeartIcon
-          }
-          alt="favorite-icon"
-          data-testid="favorite-btn"
-        />
-      </button>
     </div>
   );
 }
