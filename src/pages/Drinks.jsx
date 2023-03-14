@@ -10,6 +10,10 @@ function Drinks(props) {
   const numberOfCategoriesToShow = 5;
   return (
     <div className="drinks-page">
+      <Header
+        headerType={ { title: 'Drinks', profileIcon: true, searchIcon: true } }
+        { ...props }
+      />
       <div className="categories-buttons-container">
         {drinksCategories.slice(0, numberOfCategoriesToShow).map(({ strCategory }) => (
           <CategoryButton
@@ -20,10 +24,6 @@ function Drinks(props) {
         ))}
         <button data-testid="All-category-filter" onClick={ () => setApiURLDrinks('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=') }>Remove All Filters</button>
       </div>
-      <Header
-        headerType={ { title: 'Drinks', profileIcon: true, searchIcon: true } }
-        { ...props }
-      />
       <Recipes recipes={ drinks } { ...props } />
       <Footer { ...props } />
     </div>
