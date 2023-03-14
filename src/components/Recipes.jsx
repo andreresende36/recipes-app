@@ -5,7 +5,7 @@ import RecipeCard from './RecipeCard';
 function Recipes({ recipes, history }) {
   const numberOfRecipesToShow = 12;
   return (
-    <div className="recipes-container">
+    <div className="recipes-container" style={ { marginBottom: '80px' } }>
       {recipes.slice(0, numberOfRecipesToShow).map((recipe, index) => (
         <RecipeCard
           key={ recipe.idMeal || recipe.idDrink }

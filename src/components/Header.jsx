@@ -22,7 +22,7 @@ export default function Header(props) {
     <div className="background-upper-bar">
       <div className="upper-header">
         <span>
-          <RecipeLogoHeader />
+          <RecipeLogoHeader onClick={ () => history.push('/') } />
           <TextRecipe style={ { paddingLeft: '9px' } } />
         </span>
         <div className="header-header">
@@ -36,7 +36,11 @@ export default function Header(props) {
             </button>
           )}
           { profileIcon && (
-            <button type="button" className='button-logo' onClick={ () => history.push('/profile') }>
+            <button
+              type="button"
+              className="button-logo"
+              onClick={ () => history.push('/profile') }
+            >
               <img
                 data-testid="profile-top-btn"
                 src={ profileIconImg }
@@ -58,7 +62,7 @@ export default function Header(props) {
             onChange={ ({ target }) => setSearch(target.value) }
             data-testid="search-input"
             className="search-input-text"
-            placeholder='Search'
+            placeholder="Search"
           />
         )}
         { searchingBarVisible && (

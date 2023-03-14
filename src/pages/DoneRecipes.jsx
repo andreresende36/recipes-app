@@ -25,7 +25,7 @@ function DoneRecipes(props) {
   };
 
   return (
-    <div>
+    <div style={ { display: 'flex', flexDirection: 'column', alignContent: 'center' } }>
       <Header
         headerType={ { title: 'Done Recipes', profileIcon: true, searchIcon: false } }
         { ...props }
@@ -53,17 +53,19 @@ function DoneRecipes(props) {
           All
         </button>
       </div>
-      { recipes
-        ? recipes.map((recipe, index) => (
-          <DoneRecipeCard
-            key={ recipe.id }
-            recipe={ recipe }
-            className="done-recipe-card"
-            index={ index }
-            { ...props }
-          />
-        ))
-        : null }
+      <div className="container-done-recipes" style={ { marginBottom: '10vh' } }>
+        { recipes
+          ? recipes.map((recipe, index) => (
+            <DoneRecipeCard
+              key={ recipe.id }
+              recipe={ recipe }
+              className="done-recipe-card"
+              index={ index }
+              { ...props }
+            />
+          ))
+          : null }
+      </div>
       <Footer { ...props } />
     </div>
   );

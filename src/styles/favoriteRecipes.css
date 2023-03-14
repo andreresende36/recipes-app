@@ -1,3 +1,62 @@
-.favorite-recipe-img {
+:root{
+    --yellow-header: #FCDC36;
+    --purple: #41197f;
+    --yellow-filter: invert(86%) sepia(99%) saturate(517%) hue-rotate(330deg) brightness(102%) contrast(98%);
+    --purple-filter: invert(17%) sepia(16%) saturate(6594%) hue-rotate(244deg) brightness(101%) contrast(114%);
+}
+/* .favorite-recipe-img {
   width: 100px;
+} */
+.container-favorite-recipes{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30vh;
+}
+
+.favorite-recipes-card{
+  margin-top:10px;
+  display: flex;
+  flex-direction: row;
+  width: 90vw;
+  height: 135px;
+
+  background: #FFFFFF;
+  border: 0.517989px solid #B1B1B1;
+  border-radius: 5px;
+}
+
+.favorite-recipe-img{
+  margin:0;
+  padding:0;
+  width: auto;
+  height: 100%;
+}
+
+.favorite-card-right{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-left: 30px;
+  padding-top: 10px;
+}
+
+.favorite-card-title>a{
+  text-decoration: none;
+}
+
+
+.favorite-card-buttons>button{
+  all: unset;
+  filter: var(--yellow-filter);
+  margin-left: 6px;
+  margin-bottom: 4px;
+}
+
+.favorite-card-buttons{
+  display: flex;
+  flex-direction: row;
 }
