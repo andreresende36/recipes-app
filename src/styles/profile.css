@@ -55,7 +55,6 @@
 }
 .button-profile:hover{
     transform: scale(1.2);
-    border: 3px solid rgb(237, 238, 167); 
 }
 
 .button-profile>svg:hover{

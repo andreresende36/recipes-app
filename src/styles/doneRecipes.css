@@ -14,13 +14,6 @@
 }
 
 .done-recipe-card {
-  /* width: 90vw;
-  margin-top: 10px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-  border: 2px solid black;
-  border-radius: 20px; */
   margin-top:10px;
   display: flex;
   flex-direction: row;
@@ -61,6 +54,7 @@
 
 .recipe-card-right>button {
   all:unset;
+  margin-top: 10px;
 }
 
 .recipe-name{
@@ -76,8 +70,8 @@
   font-size: 0.8rem;
   margin-right: 4px;
   font-weight: lighter;
-  background-color: grey;
-  color: white;
+  background-color: rgb(207, 198, 198);
+  color: black;
   border-radius: 2px;
   padding:3px;
 }
@@ -103,8 +97,9 @@
   text-align: center;
   border-radius: 5px;
   font-weight: lighter;
+  padding: 8px;
 }
 
-.tag-name:hover {
-  transform: scale(1.4);
+.filters-container>button:hover{
+  transform: scale(1.10);
 }
