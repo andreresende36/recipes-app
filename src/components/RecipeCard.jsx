@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../styles/recipesFirstPage.css';
 
 function RecipeCard({ recipe, index, history }) {
   const {
@@ -10,6 +11,7 @@ function RecipeCard({ recipe, index, history }) {
   return (
     <button
       data-testid={ `${index}-recipe-button` }
+      className="recipe-button"
       onClick={ () => history.push(
         recipe.idMeal ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}`,
       ) }
@@ -22,11 +24,11 @@ function RecipeCard({ recipe, index, history }) {
           src={ strMealThumb || strDrinkThumb }
           alt={ `imagem da receita ${strMeal || strDrink}` }
           data-testid={ `${index}-card-img` }
-          className="recipe-image"
+          className="recipe-img"
         />
         <span
           data-testid={ `${index}-card-name` }
-          className="recipe-name"
+          className="recipe-name2"
         >
           { strMeal || strDrink }
         </span>

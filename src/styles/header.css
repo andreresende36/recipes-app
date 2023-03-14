@@ -3,6 +3,7 @@
     --purple: #41197f;
     --yellow-filter: invert(86%) sepia(99%) saturate(517%) hue-rotate(330deg) brightness(102%) contrast(98%);
     --purple-filter: invert(17%) sepia(16%) saturate(6594%) hue-rotate(244deg) brightness(101%) contrast(114%);
+    --white-filter: invert(99%) sepia(6%) saturate(0%) hue-rotate(18deg) brightness(105%) contrast(100%)
 }
 .background-upper-bar {
     display: flex;
@@ -58,6 +59,10 @@
     background-color: var(--yellow-header);
 }
 
+.header-logo{
+    background-color: var(--white-filter);
+}
+
 .header-header{
     display: flex;
     flex-direction: row;
@@ -69,7 +74,7 @@
     display: flex;
     flex: column;
     justify-content: center;
-    margin: 10% auto;
+    margin: 2% auto 5%;
     text-transform: uppercase;
     color: var(--purple)
 }

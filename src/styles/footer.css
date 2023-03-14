@@ -3,6 +3,7 @@
     --purple: #41197f;
     --yellow-filter: invert(86%) sepia(99%) saturate(517%) hue-rotate(330deg) brightness(102%) contrast(98%);
     --purple-filter: invert(17%) sepia(16%) saturate(6594%) hue-rotate(244deg) brightness(101%) contrast(114%);
+    --white-filter: invert(99%) sepia(6%) saturate(0%) hue-rotate(18deg) brightness(105%) contrast(100%)
 }
 
 .footer-container{
@@ -31,4 +32,13 @@
 
 .footer-button-meal>img{
     filter: var(--yellow-filter);
+}
+.footer-button-drink>img:hover{
+    filter: var(--white-filter);
+    transform: scale(1.05);
+}
+
+.footer-button-meal>img:hover{
+    transform: scale(1.05);
+    filter: var(--white-filter);
 }

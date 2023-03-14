@@ -29,7 +29,3 @@ footer {
   flex-flow: column wrap;
   justify-content: space-around;
 }
-
-.recipe-image {
-  min-height: 50px;
-}

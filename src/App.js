@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import Profile from './pages/Profile';
 import Drinks from './pages/Drinks';
