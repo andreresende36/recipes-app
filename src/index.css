@@ -25,21 +25,15 @@ footer {
   bottom: 0px;
 }
 
-/* @layer components {
-  .carousel {
-    display: flex;
-    max-width: 100vw;
-    overflow-x: scroll;
-  }
+.done-recipe-card {
+  border: 1px solid black;
+  width: 300px;
+  height: 150px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-around;
+}
 
-  .recommendation-image {
-    height: 250px;
-    width: 250px;
-  }
-
-  .start-recipe-btn {
-    bottom: 0;
-    left: 50%;
-    position: fixed;
-  }
-} */
+.recipe-image {
+  min-height: 50px;
+}
