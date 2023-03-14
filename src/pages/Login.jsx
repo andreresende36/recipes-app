@@ -45,7 +45,7 @@ export default function Login() {
             onChange={ handleCheckEmail }
           />
           <input
-            type="text"
+            type="password"
             name="password"
             id=""
             placeholder="senha"
