@@ -70,7 +70,8 @@ function DoneRecipeCard({ recipe = {}, index, history }) {
         </div>
         <button
           onClick={
-            () => navigator.clipboard.writeText(`${window.location.origin}/${type}s/${id}`)
+            () => navigator
+              .clipboard.writeText(`${window.location.origin}/${type}s/${id}`)
           && setDidCopy(true)
           }
         >

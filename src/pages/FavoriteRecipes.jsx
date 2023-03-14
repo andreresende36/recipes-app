@@ -125,7 +125,8 @@ function FavoriteRecipes(props) {
                     const localStorageRecipe = JSON.parse(localStorage
                       .getItem('favoriteRecipes'))
                       .filter((favRecipe) => favRecipe.id !== recipe.id);
-                    localStorage.setItem('favoriteRecipes', JSON.stringify(localStorageRecipe));
+                    localStorage
+                      .setItem('favoriteRecipes', JSON.stringify(localStorageRecipe));
                     setRecipes(localStorageRecipe);
                   } }
                 >

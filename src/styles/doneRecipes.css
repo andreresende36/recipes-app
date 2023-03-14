@@ -64,12 +64,12 @@
 
 .category-name{
   font-size: 0.9;
-  font-weight: lighter;
+  font-weight: normal;
 }
 .tag-name{
   font-size: 0.8rem;
   margin-right: 4px;
-  font-weight: lighter;
+  font-weight: normal;
   background-color: rgb(207, 198, 198);
   color: black;
   border-radius: 2px;
@@ -96,7 +96,7 @@
   width: 20vw;
   text-align: center;
   border-radius: 5px;
-  font-weight: lighter;
+  font-weight: normal;
   padding: 8px;
 }
 
