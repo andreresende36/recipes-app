@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
+import '../styles/doneRecipes.css';
 
 function DoneRecipeCard({ recipe = {}, index, history }) {
   const [didCopy, setDidCopy] = useState(false);
@@ -32,54 +33,61 @@ function DoneRecipeCard({ recipe = {}, index, history }) {
           className="recipe-image"
         />
       </button>
-      <button onClick={ () => history.push(`/${type}s/${id}`) }>
+      <div className="recipe-card-right">
+        <button onClick={ () => history.push(`/${type}s/${id}`) }>
+          <span
+            data-testid={ `${index}-horizontal-name` }
+            className="recipe-name"
+          >
+            { name }
+          </span>
+        </button>
         <span
-          data-testid={ `${index}-horizontal-name` }
-          className="recipe-name"
+          data-testid={ `${index}-horizontal-top-text` }
+          className="category-name"
         >
-          { name }
+          { type === 'meal' ? `${nationality} - ${category}` : alcoholicOrNot }
         </span>
-      </button>
-      <span
-        data-testid={ `${index}-horizontal-top-text` }
-        className="category-name"
-      >
-        { type === 'meal' ? `${nationality} - ${category}` : alcoholicOrNot }
-      </span>
-      <span
-        data-testid={ `${index}-horizontal-done-date` }
-        className="category-name"
-      >
-        { doneDate }
-      </span>
-      <span
-        data-testid={ `${index}-${[tags[0]]}-horizontal-tag` }
-        className="tag-name"
-      >
-        { tags[0] }
-      </span>
-      <span
-        data-testid={ `${index}-${tags[1]}-horizontal-tag` }
-        className="tag-name"
-      >
-        { tags[1] }
-      </span>
-      <button
-        onClick={
-          () => navigator.clipboard.writeText(`${window.location.origin}/${type}s/${id}`)
+        <span
+          data-testid={ `${index}-horizontal-done-date` }
+          className="category-name"
+        >
+          { doneDate }
+        </span>
+        <div style={ { display: 'flex', flexDirection: 'row' } }>
+          <span
+            data-testid={ `${index}-${[tags[0]]}-horizontal-tag` }
+            className="tag-name"
+          >
+            { tags[0] }
+          </span>
+          <span
+            data-testid={ `${index}-${tags[1]}-horizontal-tag` }
+            className="tag-name"
+          >
+            { tags[1] }
+          </span>
+        </div>
+        <button
+          onClick={
+            () => navigator.clipboard.writeText(
+              `${window.location.origin}/${type}s/${id}`,
+            )
           && setDidCopy(true)
-        }
-      >
-        { didCopy
-          ? (<p>Link copied!</p>)
-          : (
-            <img
-              src={ shareIcon }
-              alt="share-icon"
-              data-testid={ `${index}-horizontal-share-btn` }
-            />
-          )}
-      </button>
+          }
+        >
+          { didCopy
+            ? (<p>Link copied!</p>)
+            : (
+              <img
+                src={ shareIcon }
+                alt="share-icon"
+                data-testid={ `${index}-horizontal-share-btn` }
+              />
+            )}
+        </button>
+
+      </div>
     </div>
   );
 }

@@ -1,0 +1,34 @@
+:root{
+    --yellow-header: #FCDC36;
+    --purple: #41197f;
+    --yellow-filter: invert(86%) sepia(99%) saturate(517%) hue-rotate(330deg) brightness(102%) contrast(98%);
+    --purple-filter: invert(17%) sepia(16%) saturate(6594%) hue-rotate(244deg) brightness(101%) contrast(114%);
+}
+
+.footer-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:100%;
+    height: 70px;
+    background-color: var(--purple);
+}
+
+
+.footer-button-drink{
+    all:unset;
+    margin-right: 15px;
+}
+
+.footer-button-drink>img{
+    filter: var(--yellow-filter);
+}
+
+.footer-button-meal{
+    all:unset;
+    margin-left: 15px;
+}
+
+.footer-button-meal>img{
+    filter: var(--yellow-filter);
+}

@@ -1,0 +1,128 @@
+:root{
+    --yellow-header: #FCDC36;
+    --purple: #41197f;
+    --yellow-filter: invert(86%) sepia(99%) saturate(517%) hue-rotate(330deg) brightness(102%) contrast(98%);
+    --purple-filter: invert(17%) sepia(16%) saturate(6594%) hue-rotate(244deg) brightness(101%) contrast(114%);
+}
+.background-upper-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+}
+
+.upper-header{
+    width: 100%;
+    height: 4rem;
+    background-color: var(--yellow-header);
+    display: flex;
+    flex: row;
+    justify-content: space-between;
+}
+
+.upper-header>span{
+    margin: auto 20px;
+}
+.lupa{
+    all:unset;
+    background-color: var(--yellow-header);
+    color:var(--purple);
+    width:50px;
+    height:50px;
+    border-color: var(--yellow-header);
+    box-shadow: none;
+    margin-right:0;
+    padding: 0;
+}
+
+.button-logo{
+    background-color: var(--yellow-header);
+    border:0 solid var(--yellow-header);
+    color:var(--purple);
+    margin-right: 10px;
+    width:50px;
+    height:50px;
+    border: 4px solid var(--purple);
+    border-radius: 50%;
+    padding:0;
+}
+
+.header-logo{
+    width: 25px;
+    height: 25px;
+    filter: var(--purple-filter);
+}
+
+.logo-header>img{
+    color: black;
+    background-color: var(--yellow-header);
+}
+
+.header-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+}
+
+.container-page-title>h1{
+    display: flex;
+    flex: column;
+    justify-content: center;
+    margin: 10% auto;
+    text-transform: uppercase;
+    color: var(--purple)
+}
+
+.container-search{
+    margin: auto 0;
+}
+
+.search-input-text{
+    width:90vw;
+    height: 2rem;
+}
+
+.search-bar-results {
+    background-color: var(--purple);
+    height: 12vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 90;
+    margin-bottom: 20px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.search-var-results>span{
+    display: flex;
+    flex-direction: row;
+}
+
+.search-radios{
+    display: flex;
+    flex: row;
+    margin: 10px auto 10px auto;
+    color: white;
+    font-size:small;
+}
+.search-radios>p{
+    margin-left:5px;
+    margin-right:6px;
+}
+
+.search-bar-results>button{
+    all:unset;
+    width:70%;
+    background-color: #FCC436;
+    height: 1.5rem;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.search-bar-results>button:hover{
+    transform: scale(1.2);
+}

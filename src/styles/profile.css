@@ -1,0 +1,64 @@
+.tela-profile{ 
+    width:100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-info{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info>p{
+    text-justify: justify;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.user-info>h2{
+    text-justify: justify;
+    color: rgb(65, 25, 127);
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.profile-logo {
+    width: 30%;
+    height: 30%;
+    margin: 0 auto;
+}
+
+.button-profile {
+    display:flex;
+    width: 80%;
+    height: 3rem;
+    flex-direction: row;
+    margin: 0 auto;
+    border-bottom: 1px solid grey;
+    margin-top: 1.2rem;
+    justify-content: center;
+}
+
+.button-profile>button{
+    width: 9rem;
+    height: 2rem;
+    background-color: white;;
+    border: white;
+}
+.button-profile:hover{
+    transform: scale(1.2);
+    border: 3px solid rgb(237, 238, 167); 
+}
+
+.button-profile>svg:hover{
+    filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
+}
+
