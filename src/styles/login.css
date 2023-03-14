@@ -1,5 +1,6 @@
-.body{ 
-  font-family: sans-serif;
+.body {
+  font-family: Epilogue , sans-serif;
+  width: 100%;
 }
 
 .fundo {
@@ -7,10 +8,11 @@
   height: 370px;
   width:100%;
   position: absolute;
+  width: 100%;
   z-index: -1;
 }
 
-.fundo::before {
+.fundo:before {
   background: white;
   height: 100%;
   width: 100%;
@@ -19,20 +21,19 @@
 
 
 .card-login {
-  width: 100%;
-  margin: 0;
   display: grid;
-  padding: 0 0;
   grid-template-columns: [line-start] auto [line-2] auto [line-3] auto [line-end];
   grid-template-rows: [row-start] 30% [row-1] 40% [row-2] auto [row-end];
+  margin: 0;
+  padding: 0;
   width: 100%;
 }
 
-.logo{
+.logo {
+  grid-column: line-end;
   grid-column-start: line-start;
-  grid-column-end: line-end;
+  grid-row: 2;
   grid-row-start: 1;
-  grid-row-end: 2;
   height: 100%;
   margin: 0 auto;
   margin-top: 30px;
@@ -40,61 +41,57 @@
 }
 
 .login-box {
-  grid-row-start:row-2;
-  grid-row-end: row-end;
-  grid-column-start:line-start;
-  grid-column-end:line-end;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  grid-column: line-end;
+  grid-column-start: line-start;
+  grid-row: row-end;
+  grid-row-start: row-2;
   margin: 0 auto;
   width: 80%;
 }
 
 .login-box > h3 {
   color: rgb(65, 25, 127);
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: 600;
   margin: 0 auto;
   padding-bottom: 10px;
-  font-weight: lighter;
-  font-style: italic;
-  font-size: 1.5rem;
 }
 
 .login-box > input {
+  height: 2rem;
   margin: 0 auto;
   margin-bottom: 3px;
-  height: 2rem;
   width: 70%;
 }
 
 .login-box > button {
-  width: 70%;
+  background-color: #fcc436;
+  border: #fcc436;
+  color: white;
+  font-weight: 800;
   height: 2rem;
   margin: 0 auto;
   margin-top: 3px;
-  background-color: #FCC436;
-  color: white;
-  font-weight: bold;
-  border: #FCC436;
+  width: 70%;
 }
+
 .login-box > button:hover {
-  transform: scale(1.01, 1.01);
-  -moz-transform: scale(1.03, 1.03);
-  -webkit-transform: scale(1.03, 1.03);
   background-color: #ffbb0f;
+  transform: scale(1.01, 1.01);
 }
 
-.login-box > button:disabled{
+.login-box > button:disabled {
   background-color: rgb(204, 204, 204);
-
 }
 
 .tomate {
-  width: 100%;
-  grid-row-start: 2;
-  grid-row-end:3;
+  grid-column: line-end;
   grid-column-start: line-start;
-  grid-column-end: line-end;
+  grid-row: 3;
+  grid-row-start: 2;
   margin: 0 auto;
+  width: 100%;
 }
-

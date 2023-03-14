@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RecipeCard from './RecipeCard';
+import '../styles/recipesFirstPage.css';
 
 function Recipes({ recipes, history }) {
   const numberOfRecipesToShow = 12;

@@ -6,7 +6,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { getMealDetails, getDrinkDetails } from '../services/apiServices';
 import IngredientCheckbox from '../components/IngredientCheckbox';
 import { handleClickFavorite } from '../helpers/handleClickFavorite';
-import '../styles/recipeDetails.css';
+import '../styles/recipeDetailsAndInProgress.css';
 
 const copy = require('clipboard-copy');
 

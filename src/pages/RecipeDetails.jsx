@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getDrinks, getMeals } from '../services/apiServices';
 import RecommendationCard from '../components/RecommendationCard';
-import '../styles/recipeDetails.css';
+import '../styles/recipeDetailsAndInProgress.css';
 import shareSvg from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';

@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import profileIconImg from '../images/profileIcon.svg';
 import searchIconImg from '../images/searchIcon.svg';
 import HeaderContext from '../context/HeaderContext';
+import mealsIcon from '../images/mealsIcon.svg';
+import drinksIcon from '../images/drinksIcon.svg';
 import SearchBar from './SearchBar';
+import '../styles/recipesFirstPage.css';
 
 import { ReactComponent as RecipeLogoHeader } from '../images/RecipeHeaderLogo.svg';
 import { ReactComponent as TextRecipe } from '../images/textRecipeApp.svg';
@@ -52,6 +55,12 @@ export default function Header(props) {
         </div>
       </div>
       <div className="container-page-title">
+        <img
+          src={ title === 'Meals'
+            ? mealsIcon : drinksIcon }
+          alt={ `icone de ${title}` }
+          className="recipe-logo"
+        />
         <h1 data-testid="page-title">{ title }</h1>
       </div>
       <div className="container-search">
