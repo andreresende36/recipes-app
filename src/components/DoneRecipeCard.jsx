@@ -49,11 +49,18 @@ function DoneRecipeCard({ recipe = {}, index, history }) {
           { type === 'meal' ? `${nationality} - ${category}` : alcoholicOrNot }
         </span>
         <span
+          data-testid={ `${index}-horizontal-top-text` }
+          className="category-name"
+        >
+          { type === 'meal' ? `${nationality} - ${category}` : alcoholicOrNot }
+        </span>
+        <span
           data-testid={ `${index}-horizontal-done-date` }
           className="category-name"
         >
-          { doneDate }
+          { `${doneDate}` }
         </span>
+
         <div style={ { display: 'flex', flexDirection: 'row' } }>
           <span
             data-testid={ `${index}-${[tags[0]]}-horizontal-tag` }

@@ -69,4 +69,18 @@ describe('Testa o componente Header', () => {
     userEvent.click(profileBtn);
     expect(screen.getByText('Profile')).toBeInTheDocument();
   });
+  it('testa se ao clickar no icone da pagina é redirecionado pro começo', async () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <HeaderProvider>
+          <App />
+        </HeaderProvider>
+      </RecipesProvider>,
+    );
+    act(() => {
+      history.push('/drinks');
+    });
+    userEvent.click(await screen.findByTestId('logo-home'));
+    expect(history.location.pathname).toBe('/');
+  });
 });

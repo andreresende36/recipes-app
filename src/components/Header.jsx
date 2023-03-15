@@ -25,7 +25,7 @@ export default function Header(props) {
     <div className="background-upper-bar">
       <div className="upper-header">
         <span>
-          <RecipeLogoHeader onClick={ () => history.push('/') } />
+          <RecipeLogoHeader onClick={ () => history.push('/') } data-testid="logo-home" />
           <TextRecipe style={ { paddingLeft: '9px' } } />
         </span>
         <div className="header-header">

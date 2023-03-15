@@ -59,7 +59,7 @@ function SearchBar(props) {
     if (drinks.length === 0 || meals.length === 0) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
-  }, [drinks, meals, history]);
+  }, [drinks, meals]);
 
   useEffect(() => {
     // se tiver na pagina de bebidas seta como bebidas a variavel que armazena isso

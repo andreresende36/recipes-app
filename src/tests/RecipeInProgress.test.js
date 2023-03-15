@@ -47,7 +47,7 @@ const doneMockRecipesMeals = [{
   alcoholicOrNot: '',
   name: 'Big Mac',
   image: BIG_MAC_URL,
-  doneDate: expect.stringMatching(regexIsoString),
+  doneDate: regexIsoString,
   tags: [],
 }];
 
@@ -601,10 +601,10 @@ describe('Teste do componente RecipeInProgress.jsx', () => {
       expect(screen.getByTestId(FIRST_INGREDIENT)).toBeInTheDocument();
     });
     const allFalseCheckbox = screen.getAllByRole('checkbox', { checked: false });
-    const finishBtn = screen.getByTestId(finishRecipeBtnID);
     allFalseCheckbox.forEach((item) => {
       userEvent.click(item);
     });
+    const finishBtn = screen.getByRole('button', { name: /finish recipe/i });
     userEvent.click(finishBtn);
     const doneRecipes = JSON.parse(window.localStorage.getItem('doneRecipes'));
     expect(doneRecipes[1]).toMatchObject(doneMockRecipesDrinks[0]);
@@ -617,6 +617,12 @@ describe('Teste do componente RecipeInProgress.jsx', () => {
       </HeaderProvider>,
     );
     act(() => {
+      window.localStorage.setItem('inProgressRecipes', JSON.stringify({
+        drinks: {
+          15997: ['Galliano 2 1/2 shots ', 'Ice ', 'Ginger ale '],
+        },
+        meals: {},
+      }));
       history.push('/drinks/15997/in-progress');
     });
     await waitFor(() => {
@@ -624,5 +630,40 @@ describe('Teste do componente RecipeInProgress.jsx', () => {
     });
     expect(screen.getByDisplayValue(/ginger ale/i).value).toBe('Ginger ale ');
     expect(screen.getByTestId('2-ingredient-step').textContent).toBe('Ingrediente 3: Ice ');
+  });
+  it('Testa se ao entrar na bebida B-52 in progress com ela favoritada aparece favoritada e se as tags sao setadas', async () => {
+    window.localStorage.setItem('inProgressRecipes', JSON.stringify({
+      drinks: {
+        15853: [],
+      },
+      meals: {},
+    }));
+    window.localStorage.setItem('favoriteRecipes', JSON.stringify([{
+      id: '15853',
+      type: 'drink',
+      nationality: '',
+      category: 'Shot',
+      alcoholicOrNot: 'Alcoholic',
+      name: 'B-52',
+      image: 'https://www.thecocktaildb.com/images/media/drink/5a3vg61504372070.jpg',
+    }]));
+    const { history } = renderWithRouter(
+      <HeaderProvider>
+        <App />
+      </HeaderProvider>,
+    );
+    act(() => {
+      history.push('/drinks/15853/in-progress');
+    });
+    await waitFor(() => {
+      expect(screen.getByTestId(FIRST_INGREDIENT)).toBeInTheDocument();
+      expect(screen.getByTestId(favoriteBtnTestID).src).toBe('http://localhost/blackHeartIcon.svg');
+    });
+    const allFalseCheckbox = screen.getAllByRole('checkbox', { checked: false });
+    allFalseCheckbox.forEach((item) => {
+      userEvent.click(item);
+    });
+    const finishBtn = screen.getByRole('button', { name: /finish recipe/i });
+    userEvent.click(finishBtn);
   });
 });
