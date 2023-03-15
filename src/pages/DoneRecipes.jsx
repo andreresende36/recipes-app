@@ -9,10 +9,10 @@ function DoneRecipes(props) {
   const [recipes, setRecipes] = useState([]);
 
   const getDoneRecipes = () => {
-    const recipeList = JSON.parse(localStorage.getItem('doneRecipes'));
+    const recipeList = localStorage.getItem('doneRecipes');
 
-    setReceivedRecipes(recipeList);
-    setRecipes(recipeList);
+    setReceivedRecipes(JSON.parse(recipeList));
+    setRecipes(JSON.parse(recipeList));
   };
 
   useEffect(getDoneRecipes, []);
@@ -53,17 +53,15 @@ function DoneRecipes(props) {
           All
         </button>
       </div>
-      { recipes
-        ? recipes.map((recipe, index) => (
-          <DoneRecipeCard
-            key={ recipe.id }
-            recipe={ recipe }
-            className="done-recipe-card"
-            index={ index }
-            { ...props }
-          />
-        ))
-        : null }
+      { recipes?.map((recipe, index) => (
+        <DoneRecipeCard
+          key={ recipe.id }
+          recipe={ recipe }
+          className="done-recipe-card"
+          index={ index }
+          { ...props }
+        />
+      ))}
       <Footer { ...props } />
     </div>
   );
