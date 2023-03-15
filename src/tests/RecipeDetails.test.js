@@ -30,6 +30,7 @@ describe('Testa a página Recipe Details', () => {
       history.push(aquamarineRoute);
     });
 
+    //
     await waitFor(() => {
       const drinkImage = screen.getByTestId('recipe-photo');
       expect(drinkImage.src).toBe(aquamarineSrc);
