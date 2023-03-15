@@ -130,6 +130,11 @@ function RecipeInProgress({ match: { params: { id } }, location, history }) {
         JSON.stringify([...doneRecipes, objectToSetDoneRecipes]),
       );
     }
+    // depois de terminar a receita ela remove a receita do inProgress
+    const inProgressWithoutCurr = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    delete inProgressWithoutCurr.meals[id];
+    delete inProgressWithoutCurr.drinks[id];
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressWithoutCurr));
     history.push('/done-recipes');
   };
 
