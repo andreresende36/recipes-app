@@ -14,6 +14,7 @@ describe('Testes da tela de receitas favoritas', () => {
     localStorage.clear();
   });
 
+  //
   const favoriteRecipes = '/favorite-recipes';
   const horizontalName1 = '0-horizontal-name';
   const horizontalName2 = '1-horizontal-name';
