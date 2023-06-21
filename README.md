@@ -35,6 +35,8 @@ Essa API é bem similar a anterior (inclusive mantida pela mesma entidade), só 
 ## Extensão para visualização de App
 
 O App de receitas funcionará perfeitamente no navegador do seu computador, mas pelo fato de ter sido desenvolvido pensando no mobile, para uma melhor experiência é recomendado acessá-lo via smartphone ou utilizando a seguinte extensão: https://www.webmobilefirst.com/en/
+## Layout e Design sugerido
+O projeto aqui descrito foi desenvolvido no curso da Trybe. O design e layout sugeridos para a interface se encontam no arquivo Figma do link a seguir:  [protótipo do Figma](https://www.figma.com/file/9WXNFMewKRBC5ZawU1EXYG/%5BProjeto%5D%5BFrontend%5D-Recipes-App?node-id=0%3A1)
 ## Demonstração
 
 Disponibilizamos abaixo o link para que você possa acessar e conferir a nossa aplicação em pleno funcionamento. Basta clicar no link e você será redirecionado. Aproveite!
